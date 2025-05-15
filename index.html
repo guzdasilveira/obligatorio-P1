@@ -20,7 +20,6 @@
   <main>
     <section>
       <h2>Datos</h2>
-
       <article>
         <h3>Carreras</h3>
         <form>
@@ -29,7 +28,6 @@
             <select>
               <option>Montevideo</option>
               <option>Canelones</option>
-              <!-- Agregar más -->
             </select>
           </label><br />
           <label>Fecha: <input type="date" /></label><br />
@@ -46,12 +44,11 @@
             <select>
               <option>Alimenticio</option>
               <option>Banco</option>
-              <!-- etc. -->
             </select>
           </label><br />
           <label>Carreras:
             <select multiple>
-              <option>Carrera 1</option>
+            <!-- No tiene nada-->
             </select>
           </label><br />
           <button>Agregar/Actualizar Patrocinador</button>
@@ -64,10 +61,12 @@
           <label>Nombre: <input type="text" /></label><br />
           <label>Edad: <input type="number" min="18" /></label><br />
           <label>Cédula: <input type="text" /></label><br />
-          <label>Fecha de vencimiento de ficha médica: <input type="date" /></label><br />
-          <label>Tipo de corredor:</label><br />
-          <input type="radio" name="tipo" /> Deportista de élite
-          <input type="radio" name="tipo" checked /> Deportista común<br />
+          <label>Fecha de vencimiento de ficha médica:</label><br />
+          <input type="date" /><br />
+          <label>Tipo de corredor: 
+            <input type="radio" name="tipo" /> Deportista de élite
+            <input type="radio" name="tipo" checked /> Deportista común<br />
+          </label>
           <button>Agregar Corredor</button>
         </form>
       </article>
@@ -113,36 +112,17 @@
         </form>
       
         <p><strong>Inscriptos</strong></p>
-        <table>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Edad</th>
-              <th>Cédula</th>
-              <th>Ficha Médica</th>
-              <th>Número</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- A llenar con JS más adelante -->
-          </tbody>
-        </table>
       </article>
       
       <article>
         <h3>Visualizar Mapa:</h3>
         <form>
-          <input type="radio" name="mapa" checked /> Por Carreras
-          <input type="radio" name="mapa" /> Por Inscripciones
         </form>
       </article>
     </section>
   </main>
 
   <footer>
-    <p><strong>Programación 1 - Obligatorio 1er semestre 2025 - Autores:</strong></p>
-    <p>Grupo XX - Nombre ... (Número XXXXXXX) - <a href="#">Link</a></p>
-    <p>Grupo XX - Nombre ... (Número XXXXXXX) - <a href="#">Link</a></p>
   </footer>  
 </body>
 </html>

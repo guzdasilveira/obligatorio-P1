@@ -1,7 +1,7 @@
 /* Autores: Guzman da Silveira y Felipe Martinez */
 
 body {
-    font-family: sans-serif;
+    
     margin: 0;
     background-color: white;
   }
@@ -15,7 +15,7 @@ body {
   header img {
     max-width: 300px;
     display: block;
-    margin: 1em auto;
+    margin: 1em;
   }
   
   nav {
@@ -46,11 +46,11 @@ body {
   }
   
   h1, h2, h3 {
-    color: #003366;
+    color: #00254a;
+    font-family: "Helvetica", sans-serif;
   }
   
   form label {
-    display: block;
     margin: 0.5em 0;
   }
   
@@ -58,17 +58,9 @@ body {
     margin-top: 1em;
   }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1em;
-    background-color: white;
-  }
-  
-  th, td {
-    border: 1px solid black;
-    padding: 0.5em;
-    text-align: left;
+  select[multiple] {
+    height: 100px;
+    min-width: 100px;
   }
   
   footer {
@@ -78,4 +70,3 @@ table {
     font-size: 0.9em;
     border-radius: 10px;
   }
-  

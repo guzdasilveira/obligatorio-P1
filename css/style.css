@@ -1,0 +1,81 @@
+/* Autores: Guzman da Silveira y Felipe Martinez */
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: white;
+  }
+  
+  header {
+    text-align: center;
+    background-color: white;
+    padding: 1em;
+  }
+  
+  header img {
+    max-width: 300px;
+    display: block;
+    margin: 1em auto;
+  }
+  
+  nav {
+    text-align: left;
+    background-color: #f4f4f4;
+    padding: 1em;
+  }
+  
+  nav button {
+    margin: 0 0.5em;
+  }
+  
+  main {
+    padding: 1em;
+  }
+  
+  section {
+    margin-bottom: 2em;
+    padding: 1em;
+    background-color: #e0f0e0;
+  }
+  
+  article {
+    background-color: #90ee90;
+    padding: 1em;
+    border-radius: 8px;
+    margin-bottom: 1em;
+  }
+  
+  h1, h2, h3 {
+    color: #003366;
+  }
+  
+  form label {
+    display: block;
+    margin: 0.5em 0;
+  }
+  
+  button {
+    margin-top: 1em;
+  }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+    background-color: white;
+  }
+  
+  th, td {
+    border: 1px solid black;
+    padding: 0.5em;
+    text-align: left;
+  }
+  
+  footer {
+    background-color: #fefee0;
+    text-align: center;
+    padding: 1.5em;
+    font-size: 0.9em;
+    border-radius: 10px;
+  }
+  

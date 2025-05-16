@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitio de Corredores</title>
+</head> 
+<h1>Sitio de corredores</h1>
+<img src="Foto-encabezado.jpg" alt="Foto inspiracional maraton" width="400">
+<nav>
+    <button>Datos</button>
+    <button>Estadísticas</button>
+</nav>
+<body> 
+    <section>   
+        <h2> Datos </h2>
+        <article>
+            <h3> Carreras</h3>
+
+            <label for="idNombre"> Nombre: </label>
+            <input type="text" name="Nombre" id="idNombre">
+
+            <label for="idDepartamento"> Departamento: </label>
+            <select type="text" id="idDepartamento">
+                <option value="1"> Montevideo</option>
+                <option value="2"> Canelones </option>
+                <option value="3"> Maldonado </option>
+                <option value="4"> Rocha</option>
+                <option value="5">Treinta y Tres</option>
+                <option value="6">Cerro Largo</option>
+                <option value="7"> Rivera </option>
+                <option value="8"> Artigas </option>
+                <option value="9"> Salto </option>
+                <option value="10"> Paysandú </option>
+                <option value="11"> Río Negro </option>
+                <option value="12"> Soriano </option>
+                <option value="13"> Colonia </option>
+                <option value="14"> San José </option>
+                <option value="15"> Flores</option>
+                <option value="16"> Florida </option>
+                <option value="17"> Lavalleja </option>
+                <option value="18"> Durazno </option>
+                <option value="19"> Tacuarembó </option>
+            </select>
+
+            <label for="idFecha"> Fecha: </label>
+            <input type="date" name="Fecha" id="idFecha">
+
+            <label for="idCupo"> Cupo: </label>
+            <input type="number" id="idCupo" value="30" min="1" max="1000"
+            onkeyup="if(this.value > 1000) this.value=1000; else if(this.value < 0) this.value=0">
+
+            <button for="idAddRace"> Agregar Carrera </button>
+            <br>
+        </article> 
+        
+        <article>
+            <h3> Patrocinadores </h3>
+            <label for="idNombrePat"> Nombre: </label>
+            <input type="text" name="NombrePat" id="idNombrePat">
+
+            <label for="idRubro"> Rubro: </label>
+            <select type="text" id="idRubro">
+                <option value="Alimenticio"> Alimenticio</option>
+                <option value="Banco"> Banco </option>
+                <option value="Bebidas"> Bebidas </option>
+                <option value="Farmacia"> Farmacia</option>
+                <option value="Ropa deportiva">Ropa deportiva</option>
+                <option value="Estatal">Estatal</option>
+                <option value="General"> General </option>
+            </select>
+            
+            <label for="idCarrerasPat"> Carreras: </label>
+            <select multiple>
+
+            </select>
+            
+            <button for="idAddPat"> Agregar/Actualizar Patrocinador </button>
+            
+            <br>
+        </article>
+
+        <article>
+            <h3> Corredores </h3>
+            
+            <label for="idNombreCor"> Nombre: </label>
+            <input type="text" name="NombreCor" id="idNombreCor">
+
+            <label for="idEdad"> Edad: </label>
+            <input type="text" name="Edad" id="idEdad">
+            
+            <label for="idCedula"> Cedula: </label>
+            <input type="text" name="Cedula" id="idCedula">
+
+            <label for="idFechaFicha"> Fecha de vencimiento de ficha médica: </label>
+            <input type="date" name="FechaFicha" id="idFechaFicha">
+            
+            <label> Tipo de corredor:
+            <input type="radio" name="Tipo" value="elite" id="idElite">
+            <label for="idElite"> Deportista de élite  </label>
+
+            <input type="radio" name="Tipo" value="comun" id="idComun" checked>
+            <label for="idComun"> Deportista comun  </label>
+            </label>
+            
+            <button> Agregar Corredor </button>
+
+            <br>
+        </article>
+
+        <article>
+            <h3> Inscripciones </h3>
+            
+            <label for="idCorredores"> Corredores: </label>
+            <select type="text" id="idCorredores"></select>
+
+            <label for="idCarreras"> Carreras: </label>
+            <select type="text" id="idCarreras"></select>
+
+            <button> Inscribir </button>  
+            
+        </article>
+    </section>
+
+    <section>
+        <h2> Estadísticas </h2>
+
+        <article> 
+        <h3> Datos generales </h3>
+
+        <label for="idPromedioInsc"> Promedio de inscriptos por carrera: </label>
+        <p> sin datos </p>
+
+        <label for="idMasInsc"> Carrera/s con más inscriptos</label>
+        <ul> 
+            <li> sin datos </li>
+        </ul>
+
+        <label for="idSinInsc"> Carrera/s sin inscriptos ordenadas por fecha</label>
+        <ul> 
+            <li> sin datos </li>
+        </ul>
+
+        <label for="id%corr"> Porcentaje de corredores de élite: </label>
+        <p> sin datos </p>
+
+        </article>
+
+        <article>
+            <h3> Consulta Inscriptos </h3>
+            <label for="idCarrera"> Carrera: </label>
+            <select type="text" id="idCarrera"></select>
+
+                        <label> Ordenar por:
+            <input type="radio" name="Tipo" value="nombre" id="idNombrebis" checked>
+            <label for="idNombreBis"> Nombre  </label>
+
+            <input type="radio" name="Tipo" value="numero" id="idNumero" checked>
+            <label for="idNumero"> Número  </label>
+            </label>
+            
+            <table>
+                <tr>
+                    <th colspan="5">Inscriptos</th>
+                </tr>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Edad</td>
+                    <td>Cédula</td>
+                    <td>Ficha Médica</td>
+                    <td>Número</td>
+                </tr>
+            </table>       
+        </article>
+
+        <article>
+            <h3> Visualizar mapa: </h3>
+
+                        <label>
+            <input type="radio" name="Tipo" value="porCarreras" id="idPorCarreras" checked>
+            <label for="idPorCarreras"> Por Carreras  </label>
+
+            <input type="radio" name="Tipo" value="porInsc" id="idPorInsc">
+            <label for="idPorInsc"> Por Inscripciones  </label>
+            </label>
+
+
+
+        </article>
+    </section>
+</body>
+
+<footer>
+    <p> Programación 1 - Obligatorio 1er Semestre 2025 - Autores: </p>
+    <p> Grupo N1B - Guzman Da Silverira (Número 251815) </p>
+    <p> Grupo N1B - Felipe Martínez Lemos (Numero 239976)</p>
+<!--FALTAN LOS LINKS-->
+</footer>
+</html>

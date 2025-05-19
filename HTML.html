@@ -1,3 +1,4 @@
+<!--Autores: Guzmán Da Silveira y Felipe Martínez-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sitio de Corredores</title>
 </head> 
-<h1>Sitio de corredores</h1>
-<img src="Foto-encabezado.jpg" alt="Foto inspiracional maraton" width="400">
-<nav>
-    <button>Datos</button>
-    <button>Estadísticas</button>
-</nav>
+
 <body> 
+    <h1>Sitio de corredores</h1>
+    <img src="Foto-encabezado.jpg" alt="Foto inspiracional maraton" width="400">
+
+    <nav>
+        <button>Datos</button>
+        <button>Estadísticas</button>
+    </nav> 
+
     <section>   
         <h2> Datos </h2>
         <article>
@@ -21,7 +25,7 @@
             <input type="text" name="Nombre" id="idNombre">
 
             <label for="idDepartamento"> Departamento: </label>
-            <select type="text" id="idDepartamento">
+            <select id="idDepartamento">
                 <option value="1"> Montevideo</option>
                 <option value="2"> Canelones </option>
                 <option value="3"> Maldonado </option>
@@ -50,7 +54,7 @@
             <input type="number" id="idCupo" value="30" min="1" max="1000"
             onkeyup="if(this.value > 1000) this.value=1000; else if(this.value < 0) this.value=0">
 
-            <button for="idAddRace"> Agregar Carrera </button>
+            <button> Agregar Carrera </button>
             <br>
         </article> 
         
@@ -60,7 +64,7 @@
             <input type="text" name="NombrePat" id="idNombrePat">
 
             <label for="idRubro"> Rubro: </label>
-            <select type="text" id="idRubro">
+            <select id="idRubro">
                 <option value="Alimenticio"> Alimenticio</option>
                 <option value="Banco"> Banco </option>
                 <option value="Bebidas"> Bebidas </option>
@@ -71,11 +75,11 @@
             </select>
             
             <label for="idCarrerasPat"> Carreras: </label>
-            <select multiple>
+            <select id="idCarrerasPat" multiple>
 
             </select>
             
-            <button for="idAddPat"> Agregar/Actualizar Patrocinador </button>
+            <button> Agregar/Actualizar Patrocinador </button>
             
             <br>
         </article>
@@ -95,13 +99,13 @@
             <label for="idFechaFicha"> Fecha de vencimiento de ficha médica: </label>
             <input type="date" name="FechaFicha" id="idFechaFicha">
             
-            <label> Tipo de corredor:
-            <input type="radio" name="Tipo" value="elite" id="idElite">
+            <label> Tipo de corredor: </label> 
+            <input type="radio" name="TipoCorr" value="elite" id="idElite">
             <label for="idElite"> Deportista de élite  </label>
 
-            <input type="radio" name="Tipo" value="comun" id="idComun" checked>
-            <label for="idComun"> Deportista comun  </label>
-            </label>
+            <input type="radio" name="TipoCorr" value="común" id="idComun" checked>
+            <label for="idComun"> Deportista común  </label>
+            
             
             <button> Agregar Corredor </button>
 
@@ -112,10 +116,10 @@
             <h3> Inscripciones </h3>
             
             <label for="idCorredores"> Corredores: </label>
-            <select type="text" id="idCorredores"></select>
+            <select id="idCorredores"></select>
 
             <label for="idCarreras"> Carreras: </label>
-            <select type="text" id="idCarreras"></select>
+            <select id="idCarreras"></select>
 
             <button> Inscribir </button>  
             
@@ -128,47 +132,48 @@
         <article> 
         <h3> Datos generales </h3>
 
-        <label for="idPromedioInsc"> Promedio de inscriptos por carrera: </label>
-        <p> sin datos </p>
 
-        <label for="idMasInsc"> Carrera/s con más inscriptos</label>
+        <label>Promedio de inscriptos por carrera: </label> <label>sin datos</label> 
+        <br><br>
+<!--DUDA: cómo puedo poner el label, y el input sin datos, pero dejandolo pronto para la funcion a recibir?? -->
+
+        <label> Carrera/s con más inscriptos</label>
         <ul> 
             <li> sin datos </li>
         </ul>
 
-        <label for="idSinInsc"> Carrera/s sin inscriptos ordenadas por fecha</label>
+        <label> Carrera/s sin inscriptos ordenadas por fecha</label>
         <ul> 
             <li> sin datos </li>
         </ul>
 
-        <label for="id%corr"> Porcentaje de corredores de élite: </label>
-        <p> sin datos </p>
+        <label> Porcentaje de corredores de élite: </label> <label>sin datos</label>
+
+<!--DUDA: cómo puedo poner el label, y el input sin datos??, pero dejandolo pronto para la funcion a recibir?? -->
 
         </article>
 
         <article>
             <h3> Consulta Inscriptos </h3>
             <label for="idCarrera"> Carrera: </label>
-            <select type="text" id="idCarrera"></select>
+            <select id="idCarrera"></select>
 
-                        <label> Ordenar por:
-            <input type="radio" name="Tipo" value="nombre" id="idNombrebis" checked>
+            <label> Ordenar por: </label>
+            <input type="radio" name="Tipo" value="nombre" id="idNombreBis" checked>
             <label for="idNombreBis"> Nombre  </label>
 
             <input type="radio" name="Tipo" value="numero" id="idNumero" checked>
             <label for="idNumero"> Número  </label>
-            </label>
+    
             
             <table>
+                <caption>Inscriptos</caption>
                 <tr>
-                    <th colspan="5">Inscriptos</th>
-                </tr>
-                <tr>
-                    <td>Nombre</td>
-                    <td>Edad</td>
-                    <td>Cédula</td>
-                    <td>Ficha Médica</td>
-                    <td>Número</td>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Cédula</th>
+                    <th>Ficha Médica</th>
+                    <th>Número</th>
                 </tr>
             </table>       
         </article>
@@ -176,24 +181,19 @@
         <article>
             <h3> Visualizar mapa: </h3>
 
-                        <label>
             <input type="radio" name="Tipo" value="porCarreras" id="idPorCarreras" checked>
             <label for="idPorCarreras"> Por Carreras  </label>
 
             <input type="radio" name="Tipo" value="porInsc" id="idPorInsc">
             <label for="idPorInsc"> Por Inscripciones  </label>
-            </label>
-
-
 
         </article>
     </section>
-</body>
 
-<footer>
-    <p> Programación 1 - Obligatorio 1er Semestre 2025 - Autores: </p>
-    <p> Grupo N1B - Guzman Da Silverira (Número 251815) </p>
-    <p> Grupo N1B - Felipe Martínez Lemos (Numero 239976)</p>
-<!--FALTAN LOS LINKS-->
-</footer>
+    <footer>
+        <p> Programación 1 - Obligatorio 1er Semestre 2025 - Autores: </p>
+        <p> Grupo N1B - Guzman Da Silverira (Número 251815) - <a href="https://www.ort.edu.uy/" target="_blank"> Universidad ORT</a> </p>
+        <p> Grupo N1B - Felipe Martínez Lemos (Numero 239976) - <a href="https://www.ort.edu.uy/" target="_blank"> Universidad ORT</a> </p>
+    </footer>
+</body>
 </html>

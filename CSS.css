@@ -41,7 +41,8 @@ select {
 }
 
 th {
-    border: 2px solid black ;
+    border: 1px solid black;
+    border-collapse: 0;
 }
 
 footer {
@@ -53,6 +54,9 @@ footer {
     padding-bottom: 10px;
 }
 
-/* la label TIPO DE CORREDOR, esta en linea con los radio button
-chequear el tipo de letra que tiene todo
-el boton agregar carrera tiene casi el mismo largo que el input de arriba y esta centrado
+/* 
+1) la label TIPO DE CORREDOR, esta en linea con los radio button
+2) chequear el tipo de letra que tiene todo
+3) el boton agregar carrera tiene casi el mismo largo que el input de arriba y esta centrado
+4) la tabla quedan raros los bordes
+*/

@@ -5,7 +5,7 @@ img {
 }
 section {
     background-color: #D5F4D4;
-    padding: 20px 20px 10px 20px;
+    padding: 20px 20px 20px 20px;
     margin-top: 10px;
     border-radius: 10px;
     line-height: 15px;
@@ -13,21 +13,33 @@ section {
 article {
     background-color: #00FF7F;
     border-color: #00FF7F;
-    padding: 10px 0px 2px 10px;
+    padding: 10px 0px 10px 10px;
     border-radius: 10px;
     margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+article.mapa {
+    min-height: 400px;
 }
 
 article button {
     display: block;
 }
 
-label {
+label, input, select {
     display: block;
 }
 
 
-
+label.radio-label {
+    display: inline-flex;
+}
+input.radio {
+    display: inline-flex;
+    margin-inline-start: 20px;
+    margin-inline-end: 15px;
+}
 
 input[type="text"] {
     width: 120px;
@@ -40,9 +52,9 @@ select {
     min-width: 80px;
 }
 
-th {
+table, th {
     border: 1px solid black;
-    border-collapse: 0;
+    border-collapse: collapse;
 }
 
 footer {
@@ -50,15 +62,14 @@ footer {
     border-radius: 10px;
     text-align: center;
     margin-top: 10px;
+    margin-bottom: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
+
 /* 
-1) la label TIPO DE CORREDOR, esta en linea con los radio button
-2) Same con la label ORDENAR POR
-3) los radio buttons tienen mucho más espacio que el normal entre los elementos que lo rodean y entre el circulito y su texto
-4) chequear el tipo de letra que tiene todo
-5) el boton agregar carrera tiene casi el mismo largo que el input de arriba y esta centrado
-6) la tabla quedan raros los bordes 
+1) chequear el tipo de letra que tiene todo
+2) el boton agregar carrera tiene casi el mismo largo que el input de arriba y esta centrado
+3) los padding del final en la section Estadisticas y en 
 */

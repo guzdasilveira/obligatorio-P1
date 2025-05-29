@@ -101,10 +101,11 @@
             <label for="idFechaFicha"> Fecha de vencimiento de ficha médica: </label>
             <input type="date" name="FechaFicha" id="idFechaFicha">
             
-            <label id="idTipoCorr"> Tipo de corredor: </label>
-            <input type="radio" name="TipoCorr" id="idElite"> Deportista de élite
-            <input type="radio" name="TipoCorr" id="idComun" checked> Deportista común
-            
+
+            <label class="radio-label" id="idTipoCorr"> Tipo de corredor: </label>
+            <input type="radio" name="TipoCorr" id="idElite" class="radio"> Deportista de élite
+            <input type="radio" name="TipoCorr" id="idComun" class="radio" checked> Deportista común
+        
             <button id="idBotonEsstad">Agregar Corredor</button>
 
             <br>
@@ -156,10 +157,10 @@
             <label for="idCarrera"> Carrera: </label>
             <select id="idCarrera"></select>
 
-            <label> Ordenar por: </label>
-            <input type="radio" name="idNombreBis" id="idNombreBis" checked > Nombre
+            <label class="radio-label"> Ordenar por: </label>
+            <input type="radio" name="idNombreBis" id="idNombreBis" class="radio" checked > Nombre
 
-            <input type="radio" name="idNumero" id="idNumero"> Número
+            <input type="radio" name="idNumero" id="idNumero" class="radio"> Número
     
             <br><br>
             <table>
@@ -174,11 +175,11 @@
             </table>       
         </article>
 
-        <article>
+        <article class="mapa">
             <h3> Visualizar mapa: </h3>
 
-            <input type="radio" name="idPorCarreras" id="idPorCarreras" checked> Por Carreras
-            <input type="radio" name="Tipo" id="idPorInsc"> Por Inscripciones
+            <input type="radio" name="idPorCarreras" id="idPorCarreras" class="radio" checked> Por Carreras
+            <input type="radio" name="Tipo" id="idPorInsc" class="radio"> Por Inscripciones
 
         </article>
     </section>

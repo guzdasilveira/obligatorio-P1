@@ -14,8 +14,8 @@
     <img src="Foto-encabezado.jpg" alt="Foto inspiracional maraton" width="400">
 
     <nav>
-        <input type="button" id="idBotonDatos" value="Datos">
-        <input type="button" id="idBotonEsstad" value="Estadísticas">
+        <button id="idBotonDatos">Datos</button>
+        <button id="idBotonEsstad"> Estadísticas</button>
     </nav> 
 
     <section>   
@@ -56,7 +56,7 @@
             <input type="number" id="idCupo" value="30" min="1" max="1000"
             onkeyup="if(this.value > 1000) this.value=1000; else if(this.value < 0) this.value=0">
 
-            <input type="button" id="idBotonAddCarr" value="Agregar Carrera">
+            <button id="idBotonAddCarr">Agregar Carrera</button>
             <br>
         </article> 
         
@@ -81,7 +81,7 @@
 
             </select>
             
-            <input type="button" id="idBotonEsstad" value="Agregar/Actualizar Patrocinador">
+            <button id="idBotonEsstad">Agregar/Actualizar Patrocinador</button>
             
             <br>
         </article>
@@ -107,7 +107,7 @@
             <input type="radio" name="TipoCorr" id="idComun" checked> Deportista común
             
             
-            <input type="button" id="idBotonEsstad" value="Agregar Corredor">
+            <button id="idBotonEsstad">Agregar Corredor</button>
 
             <br>
         </article>
@@ -121,7 +121,7 @@
             <label for="idCarreras"> Carreras: </label>
             <select id="idCarreras"></select>
 
-            <input type="button" id="idBotonEsstad" value="Inscribir">  
+            <button id="idBotonEstad">Inscribir</button>  
             
         </article>
     </section>

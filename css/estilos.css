@@ -1,7 +1,10 @@
-
+h1 {
+    text-align: center;
+}
 img {
     display: block;
     margin-inline: auto;
+
 }
 section {
     background-color: #D5F4D4;
@@ -42,10 +45,10 @@ input.radio {
 }
 
 input[type="text"] {
-    width: 120px;
+    width: 140px;
 }
 input[type="number"] {
-    width: 120px;
+    width: 140px;
 }
 
 select {
@@ -55,6 +58,9 @@ select {
 table, th {
     border: 1px solid black;
     border-collapse: collapse;
+}
+button#idBotonAddCarr {
+    padding: 0px 20px 0px 20px;
 }
 
 footer {
@@ -68,8 +74,11 @@ footer {
 }
 
 
-/* 
-1) chequear el tipo de letra que tiene todo
-2) el boton agregar carrera tiene casi el mismo largo que el input de arriba y esta centrado
-3) los padding del final en la section Estadisticas y en 
-*/
+@media (max-width:650px) {
+    img  {
+        max-width: 50%;
+    }
+    section, article {
+        max-width: 80%;
+    }
+}

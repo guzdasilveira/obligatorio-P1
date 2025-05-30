@@ -46,11 +46,11 @@ input.radio {
     margin-inline-end: 15px;
 }
 
-input[type="text"] {
+input[type="text"], input[type=number] {
     width: 140px;
 }
-input[type="number"] {
-    width: 140px;
+input[type="date"] {
+    width: 135px;
 }
 
 select {
@@ -71,6 +71,7 @@ footer {
     text-align: center;
     margin: 10px 0px 10px 0px;
     padding: 10px 0px 10px 0px;
+    font-size: 80%;
 }
 
 

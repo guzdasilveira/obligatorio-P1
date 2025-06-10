@@ -1,0 +1,104 @@
+// Autores: Guzmán Da Silveira y Felipe Martínez
+
+class Carrera {
+  constructor(nombre, departamento, fecha, cupo) {
+    this.nombre = nombre;
+    this.departamento = departamento;
+    this.fecha = new Date(fecha);
+    this.cupo = cupo;
+    this.inscripciones = [];
+  }
+
+  hayCupo() {
+    const boolean = this.inscripciones.length < this.cupo;
+    return boolean;
+  }
+
+  agregarInscripcion(inscripcion) {
+    if (this.hayCupo()) {
+      this.inscripciones.push(inscripcion);
+    }
+  }
+
+  cantidadInscriptos() {
+    return this.inscripciones.length;
+  }
+}
+
+class Corredor {
+  constructor(nombre, edad, cedula, fechaFicha, esElite) {
+    this.nombre = nombre;
+    this.edad = edad;
+    this.cedula = cedula;
+    this.fechaFicha = new Date(fechaFicha);
+    this.esElite = esElite;
+  }
+
+  tieneFichaVigente() {
+    const today = new Date();
+    const vigente = this.fechaFicha >= today;
+    if (vigente) {
+    } else {
+    }
+    return vigente;
+  }
+}
+
+class Inscripcion {
+  constructor(corredor, carrera, numero) {
+    this.corredor = corredor;
+    this.carrera = carrera;
+    this.numero = numero;
+  }
+}
+
+class Patrocinador {
+  constructor(nombre, rubro) {
+    this.nombre = nombre;
+    this.rubro = rubro;
+    this.carreras = [];
+  }
+
+  agregarCarrera(carrera) {
+    if (!this.carreras.includes(carrera)) {
+      this.carreras.push(carrera);
+    }
+  }
+}
+
+class Sistema {
+  constructor() {
+    this.carreras = [];
+    this.corredores = [];
+    this.inscripciones = [];
+    this.patrocinadores = [];
+  }
+
+  agregarCarrera(carrera) {
+    this.carreras.push(carrera);
+  }
+
+  agregarCorredor(corredor) {
+    this.corredores.push(corredor);
+  }
+
+  agregarPatrocinador(patrocinador) {
+    let existente = this.patrocinadores.find((p) => p.nombre === patrocinador.nombre);
+    if (!existente) {
+      this.patrocinadores.push(patrocinador);
+    } else {
+      existente.rubro = patrocinador.rubro;
+      existente.carreras = patrocinador.carreras;
+    }
+  }
+
+  inscribirCorredor(corredor, carrera, numero) {
+    if (carrera.hayCupo() && corredor.tieneFichaVigente()) {
+      const inscripcion = new Inscripcion(corredor, carrera, numero);
+      carrera.agregarInscripcion(inscripcion);
+      this.inscripciones.push(inscripcion);
+      return true;
+    }
+    return false;
+  }
+}

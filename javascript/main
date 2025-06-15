@@ -1,12 +1,14 @@
 // Autores: Guzmán Da Silveira y Felipe Martínez
 
 const sistema = new Sistema();
-
+   
 // Referencias a botones
+function inicio() {
 document.getElementById("idBotonAddCarr").addEventListener("click", agregarCarrera);
 document.getElementById("idBotonAgregarActualizar").addEventListener("click", agregarActualizarPatrocinador);
 document.getElementById("idBotonAgregarCorredor").addEventListener("click", agregarCorredor);
 document.getElementById("idBotonInscribir").addEventListener("click", inscribirCorredor);
+}
 
 // Funciones
 function agregarCarrera() {
@@ -51,6 +53,7 @@ function agregarCorredor() {
     sistema.agregarCorredor(corredor);
     actualizarSelectCorredores();
     alert("Corredor agregado con éxito.");
+    document.getElementById("formCorredores").reset();
   } else {
     alert("Por favor, complete todos los datos del corredor.");
   }

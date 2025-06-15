@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/css/estilos.css">
+    <script src="javascript/clases"></script>
+    <script src="javascript/main"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sitio de Corredores</title>
 </head> 
@@ -22,103 +24,106 @@
         <h2> Datos </h2>
         <article>
             <h3> Carreras</h3>
+            <form id="formCarrera">
+                <label for="idNombre"> Nombre: </label>
+                <input type="text" name="Nombre" id="idNombre">
 
-            <label for="idNombre"> Nombre: </label>
-            <input type="text" name="Nombre" id="idNombre">
+                <label for="idDepartamento"> Departamento: </label>
+                <select id="idDepartamento">
+                    <option value="1"> Montevideo</option>
+                    <option value="2"> Canelones </option>
+                    <option value="3"> Maldonado </option>
+                    <option value="4"> Rocha</option>
+                    <option value="5">Treinta y Tres</option>
+                    <option value="6">Cerro Largo</option>
+                    <option value="7"> Rivera </option>
+                    <option value="8"> Artigas </option>
+                    <option value="9"> Salto </option>
+                    <option value="10"> Paysandú </option>
+                    <option value="11"> Río Negro </option>
+                    <option value="12"> Soriano </option>
+                    <option value="13"> Colonia </option>
+                    <option value="14"> San José </option>
+                    <option value="15"> Flores</option>
+                    <option value="16"> Florida </option>
+                    <option value="17"> Lavalleja </option>
+                    <option value="18"> Durazno </option>
+                    <option value="19"> Tacuarembó </option>
+                </select>
 
-            <label for="idDepartamento"> Departamento: </label>
-            <select id="idDepartamento">
-                <option value="1"> Montevideo</option>
-                <option value="2"> Canelones </option>
-                <option value="3"> Maldonado </option>
-                <option value="4"> Rocha</option>
-                <option value="5">Treinta y Tres</option>
-                <option value="6">Cerro Largo</option>
-                <option value="7"> Rivera </option>
-                <option value="8"> Artigas </option>
-                <option value="9"> Salto </option>
-                <option value="10"> Paysandú </option>
-                <option value="11"> Río Negro </option>
-                <option value="12"> Soriano </option>
-                <option value="13"> Colonia </option>
-                <option value="14"> San José </option>
-                <option value="15"> Flores</option>
-                <option value="16"> Florida </option>
-                <option value="17"> Lavalleja </option>
-                <option value="18"> Durazno </option>
-                <option value="19"> Tacuarembó </option>
-            </select>
+                <label for="idFecha"> Fecha: </label>
+                <input type="date" name="Fecha" id="idFecha">
 
-            <label for="idFecha"> Fecha: </label>
-            <input type="date" name="Fecha" id="idFecha">
+                <label for="idCupo"> Cupo: </label>
+                <input type="number" id="idCupo" value="30" min="1" max="1000"
+                onkeyup="if(this.value > 1000) this.value=1000; else if(this.value < 0) this.value=0">
 
-            <label for="idCupo"> Cupo: </label>
-            <input type="number" id="idCupo" value="30" min="1" max="1000"
-            onkeyup="if(this.value > 1000) this.value=1000; else if(this.value < 0) this.value=0">
-
-            <button id="idBotonAddCarr">Agregar Carrera</button>
+                <button id="idBotonAddCarr">Agregar Carrera</button>
+            </form>
         </article> 
         
         <article>
             <h3> Patrocinadores </h3>
-            <label for="idNombrePat"> Nombre: </label>
-            <input type="text" name="NombrePat" id="idNombrePat">
+            <form id="formPatrocinadores">
+                <label for="idNombrePat"> Nombre: </label>
+                <input type="text" name="NombrePat" id="idNombrePat">
 
-            <label for="idRubro"> Rubro: </label>
-            <select id="idRubro">
-                <option value="Alimenticio"> Alimenticio</option>
-                <option value="Banco"> Banco </option>
-                <option value="Bebidas"> Bebidas </option>
-                <option value="Farmacia"> Farmacia</option>
-                <option value="Ropa deportiva">Ropa deportiva</option>
-                <option value="Estatal">Estatal</option>
-                <option value="General"> General </option>
-            </select>
-            
-            <label for="idCarrerasPat"> Carreras: </label>
-            <select id="idCarrerasPat" multiple>
+                <label for="idRubro"> Rubro: </label>
+                <select id="idRubro">
+                    <option value="Alimenticio"> Alimenticio</option>
+                    <option value="Banco"> Banco </option>
+                    <option value="Bebidas"> Bebidas </option>
+                    <option value="Farmacia"> Farmacia</option>
+                    <option value="Ropa deportiva">Ropa deportiva</option>
+                    <option value="Estatal">Estatal</option>
+                    <option value="General"> General </option>
+                </select>
+                
+                <label for="idCarrerasPat"> Carreras: </label>
+                <select id="idCarrerasPat" multiple>
 
-            </select>
-            
-            <button id="idBotonAgregar/Actualizar">Agregar/Actualizar Patrocinador</button>
-            
+                </select>
+                
+                <button id="idBotonAgregar/Actualizar">Agregar/Actualizar Patrocinador</button>
+            </form>
         </article>
 
         <article>
             <h3> Corredores </h3>
+            <form id="formCorredores">
+                <form id="formPatrocinadores"></form>
+                <label for="idNombreCor"> Nombre: </label>
+                <input type="text" name="NombreCor" id="idNombreCor">
+
+                <label for="idEdad"> Edad: </label>
+                <input type="text" name="Edad" id="idEdad">
+                
+                <label for="idCedula"> Cédula: </label>
+                <input type="number" name="Cedula" id="idCedula">
+
+                <label for="idFechaFicha"> Fecha de vencimiento de ficha médica: </label>
+                <input type="date" name="FechaFicha" id="idFechaFicha">
+                
+
+                <label class="radio-label" id="idTipoCorr"> Tipo de corredor: </label>
+                <input type="radio" name="TipoCorr" id="idElite" class="radio"> Deportista de élite
+                <input type="radio" name="TipoCorr" id="idComun" class="radio" checked> Deportista común
             
-            <label for="idNombreCor"> Nombre: </label>
-            <input type="text" name="NombreCor" id="idNombreCor">
-
-            <label for="idEdad"> Edad: </label>
-            <input type="text" name="Edad" id="idEdad">
-            
-            <label for="idCedula"> Cédula: </label>
-            <input type="text" name="Cedula" id="idCedula">
-
-            <label for="idFechaFicha"> Fecha de vencimiento de ficha médica: </label>
-            <input type="date" name="FechaFicha" id="idFechaFicha">
-            
-
-            <label class="radio-label" id="idTipoCorr"> Tipo de corredor: </label>
-            <input type="radio" name="TipoCorr" id="idElite" class="radio"> Deportista de élite
-            <input type="radio" name="TipoCorr" id="idComun" class="radio" checked> Deportista común
-        
-            <button id="idBotonEsstad">Agregar Corredor</button>
-
+                <button id="idBotonEsstad">Agregar Corredor</button>
+            </form>
         </article>
 
         <article>
             <h3> Inscripciones </h3>
-            
-            <label for="idCorredores"> Corredores: </label>
-            <select id="idCorredores"></select>
+            <form id="formInscripciones"></form>
+                <label for="idCorredores"> Corredores: </label>
+                <select id="idCorredores"></select>
 
-            <label for="idCarreras"> Carreras: </label>
-            <select id="idCarreras"></select>
+                <label for="idCarreras"> Carreras: </label>
+                <select id="idCarreras"></select>
 
-            <button id="idBotonInscribir">Inscribir</button>  
-            
+                <button id="idBotonInscribir">Inscribir</button>  
+            </form>
         </article>
     </section>
 

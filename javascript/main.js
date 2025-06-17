@@ -1,16 +1,37 @@
 // Autores: Guzmán Da Silveira y Felipe Martínez
 
 const sistema = new Sistema();
-   
+
 // Referencias a botones
-function inicio() {
+document.getElementById("idBotonDatos").addEventListener("click", opcionDatos);
+document.getElementById("idBotonEstad").addEventListener("click", opcionEstadisticas);
 document.getElementById("idBotonAddCarr").addEventListener("click", agregarCarrera);
 document.getElementById("idBotonAgregarActualizar").addEventListener("click", agregarActualizarPatrocinador);
 document.getElementById("idBotonAgregarCorredor").addEventListener("click", agregarCorredor);
 document.getElementById("idBotonInscribir").addEventListener("click", inscribirCorredor);
-}
 
 // Funciones
+
+function opcionDatos() {
+  this.style.fontWeight = "bold";
+  this.style.border = "solid";
+  this.style.borderRadius = "5px";
+  this.style.backgroundColor = "#C2C2C2";
+  document.getElementById("idBotonEstad").style = "default";
+  document.getElementById("sectionDatos").style.display = "block";
+  document.getElementById("sectionEstadisticas").style.display = "none";
+}
+
+function opcionEstadisticas() {
+  this.style.fontWeight = "bold";
+  this.style.border = "solid";
+  this.style.borderRadius = "5px";
+  this.style.backgroundColor = "#C2C2C2";
+  document.getElementById("idBotonDatos").style = "default";
+  document.getElementById("sectionEstadisticas").style.display = "block";
+  document.getElementById("sectionDatos").style.display = "none";
+}
+
 function agregarCarrera() {
   const nombre = document.getElementById("idNombre").value;
   const depto = document.getElementById("idDepartamento").value;
@@ -21,7 +42,20 @@ function agregarCarrera() {
     const nuevaCarrera = new Carrera(nombre, depto, fecha, cupo);
     sistema.agregarCarrera(nuevaCarrera);
     actualizarSelectCarreras();
+
+    // Seleccionar automáticamente la nueva carrera en los selects
+    document.getElementById("idCarrerasPat").value = nombre;
+    document.getElementById("idCarreras").value = nombre;
+    document.getElementById("idCarrera").value = nombre;
+
     alert("Carrera agregada con éxito.");
+
+    // Vaciar los campos
+    document.getElementById("idNombre").value = "";
+    document.getElementById("idDepartamento").selectedIndex = 0;
+    document.getElementById("idFecha").value = "";
+    document.getElementById("idCupo").value = "";
+    document.getElementById("idNombre").focus();
   } else {
     alert("Por favor, complete todos los campos correctamente.");
   }
@@ -53,7 +87,6 @@ function agregarCorredor() {
     sistema.agregarCorredor(corredor);
     actualizarSelectCorredores();
     alert("Corredor agregado con éxito.");
-    document.getElementById("formCorredores").reset();
   } else {
     alert("Por favor, complete todos los datos del corredor.");
   }
@@ -84,7 +117,7 @@ function actualizarSelectCarreras() {
     document.getElementById("idCarrera"),
   ];
   selects.forEach((select) => {
-    select.innerHTML = "";
+    //  select.innerHTML = "";
     sistema.carreras.forEach((c) => {
       const opt = document.createElement("option");
       opt.value = c.nombre;

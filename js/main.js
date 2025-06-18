@@ -82,19 +82,11 @@ function agregarCorredor() {
 
   if (nombre && !isNaN(edad) && cedula && ficha) {
     const corredor = new Corredor(nombre, edad, cedula, ficha, esElite);
-<<<<<<< HEAD
     const boolean = sistema.agregarCorredor(corredor);
     if (boolean) {
       actualizarSelectCorredores();
       alert("Corredor agregado con éxito.");
     }
-=======
-
-    sistema.agregarCorredor(corredor);
-
-    actualizarSelectCorredores();
-    alert("Corredor agregado con éxito.");
->>>>>>> 820d6f0ecc1f669db14672c2e0ce6405c4cb1704
   } else {
     alert("Por favor, complete todos los datos del corredor.");
   }
@@ -104,7 +96,6 @@ function inscribirCorredor() {
   const nombreCorredor = document.getElementById("idCorredores").value;
   const nombreCarrera = document.getElementById("idCarreras").value;
 
-<<<<<<< HEAD
   const corredorInsc = sistema.corredores.find((c) => c.nombre === nombreCorredor);
   const carrera = sistema.carreras.find((c) => c.nombre === nombreCarrera);
 
@@ -116,24 +107,13 @@ function inscribirCorredor() {
     }
     const numero = carrera.inscripciones.length + 1;
     const exito = sistema.inscribirCorredor(corredorInsc, carrera, numero);
-=======
-  const corredor = sistema.corredores.find((c) => c.nombre === nombreCorredor);
-  const carrera = sistema.carreras.find((c) => c.nombre === nombreCarrera);
-
-  if (corredor && carrera) {
-    const numero = carrera.inscripciones.length + 1;
-    const exito = sistema.inscribirCorredor(corredor, carrera, numero);
->>>>>>> 820d6f0ecc1f669db14672c2e0ce6405c4cb1704
     if (exito) {
       alert("Corredor inscrito con éxito.");
     } else {
       alert("No se pudo inscribir. Verifique cupo o ficha médica.");
     }
   }
-<<<<<<< HEAD
   // TENEMOS QUE VER LO DE LA FICHA QUE SEA VALIDA
-=======
->>>>>>> 820d6f0ecc1f669db14672c2e0ce6405c4cb1704
 }
 
 function actualizarSelectCarreras() {
@@ -142,18 +122,12 @@ function actualizarSelectCarreras() {
     document.getElementById("idCarreras"),
     document.getElementById("idCarrera"),
   ];
-<<<<<<< HEAD
 
   const carrerasOrdenadas = [...sistema.carreras].sort((a, b) => a.nombre.localeCompare(b.nombre));
 
   selects.forEach((select) => {
     select.innerHTML = "";
     carrerasOrdenadas.forEach((c) => {
-=======
-  selects.forEach((select) => {
-    select.innerHTML = "";
-    sistema.carreras.forEach((c) => {
->>>>>>> 820d6f0ecc1f669db14672c2e0ce6405c4cb1704
       const opt = document.createElement("option");
       opt.value = c.nombre;
       opt.textContent = c.nombre;
@@ -165,7 +139,6 @@ function actualizarSelectCarreras() {
 function actualizarSelectCorredores() {
   const select = document.getElementById("idCorredores");
   select.innerHTML = "";
-<<<<<<< HEAD
 
   const corredoresOrdenados = [...sistema.corredores].sort((a, b) => a.nombre.localeCompare(b.nombre));
 
@@ -173,12 +146,6 @@ function actualizarSelectCorredores() {
     const opt = document.createElement("option");
     opt.value = c.nombre;
     opt.textContent = c.nombre + " " + c.cedula;
-=======
-  sistema.corredores.forEach((c) => {
-    const opt = document.createElement("option");
-    opt.value = c.nombre;
-    opt.textContent = c.nombre;
->>>>>>> 820d6f0ecc1f669db14672c2e0ce6405c4cb1704
     select.appendChild(opt);
   });
 }

@@ -10,12 +10,7 @@ class Carrera {
   }
 
   hayCupo() {
-<<<<<<< HEAD
     return this.inscripciones.length < this.cupo;
-=======
-    const boolean = this.inscripciones.length < this.cupo;
-    return boolean;
->>>>>>> 820d6f0ecc1f669db14672c2e0ce6405c4cb1704
   }
 
   agregarInscripcion(inscripcion) {
@@ -53,18 +48,6 @@ class Corredor {
       }
     }
   }
-<<<<<<< HEAD
-=======
-
-  tieneFichaVigente() {
-    const today = new Date();
-    const vigente = this.fechaFicha >= today;
-    if (vigente) {
-    } else {
-    }
-    return vigente;
-  }
->>>>>>> 820d6f0ecc1f669db14672c2e0ce6405c4cb1704
   // agregar ToString()
 }
 
@@ -112,7 +95,6 @@ class Sistema {
   }
 
   agregarCorredor(corredor) {
-<<<<<<< HEAD
     const existe = this.corredores.some((c) => c.cedula === corredor.cedula);
     if (existe) {
       alert("Esa cédula ya fue registrada.");
@@ -124,11 +106,6 @@ class Sistema {
     }
     this.corredores.push(corredor);
     return true;
-=======
-    cedulaUnica();
-    esMayor();
-    this.corredores.push(corredor);
->>>>>>> 820d6f0ecc1f669db14672c2e0ce6405c4cb1704
   }
 
   agregarPatrocinador(patrocinador) {
@@ -148,25 +125,16 @@ class Sistema {
   }
 
   inscribirCorredor(corredor, carrera, numero) {
-<<<<<<< HEAD
     if (this.inscripciones.some((i) => i.corredor === corredor && i.carrera === carrera)) {
       alert("Este corredor ya está inscripto a esta carrera.");
       return false;
     } else {
-=======
-    if (carrera.hayCupo() && corredor.tieneFichaVigente()) {
->>>>>>> 820d6f0ecc1f669db14672c2e0ce6405c4cb1704
       const inscripcion = new Inscripcion(corredor, carrera, numero);
       carrera.agregarInscripcion(inscripcion);
       this.inscripciones.push(inscripcion);
       return true;
     }
-<<<<<<< HEAD
   }
 
-=======
-    return false;
-  }
->>>>>>> 820d6f0ecc1f669db14672c2e0ce6405c4cb1704
   // agregar ToString()
 }

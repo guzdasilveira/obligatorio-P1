@@ -135,6 +135,4 @@ class Sistema {
       return true;
     }
   }
-
-  // agregar ToString()
 }

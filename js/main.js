@@ -80,6 +80,7 @@ function agregarCorredor() {
   const ficha = document.getElementById("idFechaFicha").value;
   const esElite = document.getElementById("idElite").checked;
 
+  // FALTA PONER UN IF, que si esElite está chequeado, va esa, y sino, asignarle el otro valor
   if (nombre && !isNaN(edad) && cedula && ficha) {
     const corredor = new Corredor(nombre, edad, cedula, ficha, esElite);
     const boolean = sistema.agregarCorredor(corredor);
@@ -98,22 +99,34 @@ function inscribirCorredor() {
 
   const corredorInsc = sistema.corredores.find((c) => c.nombre === nombreCorredor);
   const carrera = sistema.carreras.find((c) => c.nombre === nombreCarrera);
+  const patrocinador = sistema.patrocinadores.find((c) => c.carrera === nombreCarreracarrera);
 
   if (corredorInsc && carrera) {
+    const exito = sistema.inscribirCorredor(corredorInsc, carrera, numero);
+    const numero = carrera.inscripciones.length + 1;
+    if (numero >= carrera.cupo) {
+      alert("no hay más cupos");
+    }
     if (corredorInsc.fechaFicha < carrera.fecha) {
       alert("Tiene la ficha médica vencida");
-      console.log("pipe pruebas")
       return;
     }
-    const numero = carrera.inscripciones.length + 1;
-    const exito = sistema.inscribirCorredor(corredorInsc, carrera, numero);
     if (exito) {
-      alert("Corredor inscrito con éxito.");
+      console.log(`¡Inscripción realizada con éxito!
+        Número: ${numero}
+        Nombre: ${corredorInsc.nombre} ${corredorInsc.edad} años, CI: ${corredorInsc.cedula} Ficha Médica ${corredorInsc.fechaFicha}
+        ES ELITE? ES COMUN? que onda wachoooo
+        Carrera: ${carrera.nombre} en ${carrera.departamento} el ${carrera.fecha} Cupo: ${carrera.cupo}
+        ${patrocinador.nombre} (${patrocinador.rubro})`);
     } else {
       alert("No se pudo inscribir. Verifique cupo o ficha médica.");
     }
   }
   // TENEMOS QUE VER LO DE LA FICHA QUE SEA VALIDA
+}
+
+function mensajeInscripción() {
+  return
 }
 
 function actualizarSelectCarreras() {

@@ -6,32 +6,18 @@ class Carrera {
     this.departamento = departamento;
     this.fecha = new Date(fecha);
     this.cupo = cupo;
-    this.inscripciones = [];
-  }
-
-  hayCupo() {
-    return this.inscripciones.length < this.cupo;
-  }
-
-  agregarInscripcion(inscripcion) {
-    if (this.hayCupo()) {
-      this.inscripciones.push(inscripcion);
-    }
-  }
-
-  cantidadInscriptos() {
-    return this.inscripciones.length;
+    this.inscripciones= [];
   }
   // agregar ToString()
 }
 
 class Corredor {
-  constructor(nombre, edad, cedula, fechaFicha, esElite) {
+  constructor(nombre, edad, cedula, fechaFicha, tipoCorredor) {
     this.nombre = nombre;
     this.edad = edad;
     this.cedula = cedula;
     this.fechaFicha = new Date(fechaFicha);
-    this.esElite = esElite;
+    this.tipoCorredor = tipoCorredor;
   }
   esMayor() {
     if (this.edad >= 18) {
@@ -124,15 +110,22 @@ class Sistema {
     return true;
   }
 
-  inscribirCorredor(corredor, carrera, numero) {
-    if (this.inscripciones.some((i) => i.corredor === corredor && i.carrera === carrera)) {
-      alert("Este corredor ya está inscripto a esta carrera.");
-      return false;
-    } else {
-      const inscripcion = new Inscripcion(corredor, carrera, numero);
-      carrera.agregarInscripcion(inscripcion);
-      this.inscripciones.push(inscripcion);
-      return true;
-    }
-  }
+inscribirCorredor(corredor, carrera, numero) {
+    const inscripcion = new Inscripcion(corredor, carrera, numero);
+    carrera.agregarInscripcion(inscripcion);
+    this.inscripciones.push(inscripcion);
+    return true;
 }
+
+//ESTADISTICAS
+  promedioInscriptos() {
+    if (this.carreras.length<1) {
+      return "sin datos";
+    } else {
+    const promedio= (Sistema.carreras.length+1)/Sistema.inscripciones.length+1);
+    return promedio;
+    }
+}
+
+
+

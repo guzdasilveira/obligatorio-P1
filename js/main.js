@@ -78,9 +78,10 @@ function agregarCorredor() {
   const edad = parseInt(document.getElementById("idEdad").value);
   const cedula = document.getElementById("idCedula").value;
   const ficha = document.getElementById("idFechaFicha").value;
-  const esElite = document.getElementById("idElite").checked;
-
-  // FALTA PONER UN IF, que si esElite está chequeado, va esa, y sino, asignarle el otro valor
+  const tipoCorredor = "Deportista Común"
+  if (document.getElementById("idElite").checked) {
+    tipoCorredor = "Deportista de Élite"
+  }
   if (nombre && !isNaN(edad) && cedula && ficha) {
     const corredor = new Corredor(nombre, edad, cedula, ficha, esElite);
     const boolean = sistema.agregarCorredor(corredor);
@@ -99,35 +100,30 @@ function inscribirCorredor() {
 
   const corredorInsc = sistema.corredores.find((c) => c.nombre === nombreCorredor);
   const carrera = sistema.carreras.find((c) => c.nombre === nombreCarrera);
-  const patrocinador = sistema.patrocinadores.find((c) => c.carrera === nombreCarreracarrera);
+  const patrocinador = sistema.patrocinadores.find((c) => c.carrera === nombreCarrera);
 
-  if (corredorInsc && carrera) {
-    const exito = sistema.inscribirCorredor(corredorInsc, carrera, numero);
-    const numero = carrera.inscripciones.length + 1;
+if (corredorInsc && carrera) {
+    const numero = carrera.inscripciones.length + 1;}
+    if (sistema.inscripciones.somesome((i) => i.corredor === corredor && i.carrera === carrera)) {
+        alert("Este corredor ya está inscripto a esta carrera.");
+        return;
+    }
     if (numero >= carrera.cupo) {
-      alert("no hay más cupos");
+        alert("no hay más cupos");
+        return;
     }
     if (corredorInsc.fechaFicha < carrera.fecha) {
-      alert("Tiene la ficha médica vencida");
-      return;
+        alert("Tiene la ficha médica vencida");
+        return;
     }
-    if (exito) {
-      console.log(`¡Inscripción realizada con éxito!
-        Número: ${numero}
-        Nombre: ${corredorInsc.nombre} ${corredorInsc.edad} años, CI: ${corredorInsc.cedula} Ficha Médica ${corredorInsc.fechaFicha}
-        ES ELITE? ES COMUN? que onda wachoooo
-        Carrera: ${carrera.nombre} en ${carrera.departamento} el ${carrera.fecha} Cupo: ${carrera.cupo}
-        ${patrocinador.nombre} (${patrocinador.rubro})`);
-    } else {
-      alert("No se pudo inscribir. Verifique cupo o ficha médica.");
+    sistema.inscribirCorredor(corredorInsc, carrera, numero);
+    console.log(`¡Inscripción realizada con éxito!
+    Número: ${numero}
+    Nombre: ${corredorInsc.nombre} ${corredorInsc.edad} años, CI: ${corredorInsc.cedula} Ficha Médica ${corredorInsc.fechaFicha}
+    ${corredorInsc.tipoCorredor}
+    Carrera: ${carrera.nombre} en ${carrera.departamento} el ${carrera.fecha} Cupo: ${carrera.cupo}
+    ${patrocinador.nombre} (${patrocinador.rubro})`);
     }
-  }
-  // TENEMOS QUE VER LO DE LA FICHA QUE SEA VALIDA
-}
-
-function mensajeInscripción() {
-  return
-}
 
 function actualizarSelectCarreras() {
   const selects = [
@@ -162,3 +158,5 @@ function actualizarSelectCorredores() {
     select.appendChild(opt);
   });
 }
+
+//ESTADISTICAS

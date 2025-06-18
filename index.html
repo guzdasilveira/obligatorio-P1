@@ -18,7 +18,7 @@
       <button id="idBotonEstad">Estadísticas</button>
     </nav>
 
-    <section>
+    <section id="sectionDatos">
       <h2>Datos</h2>
       <article>
         <h3>Carreras</h3>
@@ -122,7 +122,7 @@
       </article>
     </section>
 
-    <section>
+    <section id="sectionEstadisticas">
       <h2>Estadísticas</h2>
 
       <article>
@@ -151,9 +151,9 @@
         <select id="idCarrera"></select>
 
         <label class="radio-label"> Ordenar por: </label>
-        <input type="radio" name="idNombreBis" id="idNombreBis" class="radio" checked /> Nombre
+        <input type="radio" name="OrdenarNombreNumero" id="idNombreBis" class="radio" checked /> Nombre
 
-        <input type="radio" name="idNumero" id="idNumero" class="radio" /> Número
+        <input type="radio" name="OrdenarNombreNumero" id="idNumero" class="radio" /> Número
 
         <br /><br />
         <table>
@@ -173,8 +173,9 @@
       <article class="mapa">
         <h3>Visualizar mapa:</h3>
 
-        <input type="radio" name="idPorCarreras" id="idPorCarreras" class="radio" checked /> Por Carreras
-        <input type="radio" name="Tipo" id="idPorInsc" class="radio" /> Por Inscripciones <br /><br /><br />
+        <input type="radio" name="OrdenarCarreraInscripciones" id="idPorCarreras" class="radio" checked /> Por
+        Carreras <input type="radio" name="OrdenarCarreraInscripciones" id="idPorInsc" class="radio" /> Por
+        Inscripciones <br /><br /><br />
       </article>
     </section>
 

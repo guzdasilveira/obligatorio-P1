@@ -10,8 +10,7 @@ class Carrera {
   }
 
   hayCupo() {
-    const boolean = this.inscripciones.length < this.cupo;
-    return boolean;
+    return this.inscripciones.length < this.cupo;
   }
 
   agregarInscripcion(inscripcion) {
@@ -23,6 +22,7 @@ class Carrera {
   cantidadInscriptos() {
     return this.inscripciones.length;
   }
+  // agregar ToString()
 }
 
 class Corredor {
@@ -33,15 +33,26 @@ class Corredor {
     this.fechaFicha = new Date(fechaFicha);
     this.esElite = esElite;
   }
-
-  tieneFichaVigente() {
-    const today = new Date();
-    const vigente = this.fechaFicha >= today;
-    if (vigente) {
+  esMayor() {
+    if (this.edad >= 18) {
+      return true;
     } else {
+      return false;
     }
-    return vigente;
   }
+  cedulaUnica() {
+    for (let i = 0; i < this.cedula.length; i++) {
+      if (this.cedula === corredores.cedula[i]) {
+        alert("Esa cedula ya fue registrada.");
+        return false;
+      }
+    }
+  }
+
+  tieneFichaVigente(carrera) {
+    return this.fechaFicha >= carrera.fecha;
+  }
+  // agregar ToString()
 }
 
 class Inscripcion {
@@ -50,6 +61,7 @@ class Inscripcion {
     this.carrera = carrera;
     this.numero = numero;
   }
+  // agregar ToString()
 }
 
 class Patrocinador {
@@ -64,6 +76,7 @@ class Patrocinador {
       this.carreras.push(carrera);
     }
   }
+  // agregar ToString()
 }
 
 class Sistema {
@@ -75,21 +88,44 @@ class Sistema {
   }
 
   agregarCarrera(carrera) {
+    for (let i = 0; i < this.carreras.length; i++) {
+      if (this.carreras[i].nombre.toLowerCase() === carrera.nombre.toLowerCase()) {
+        alert("Ya existe una carrera con ese nombre.");
+        return false;
+      }
+    }
     this.carreras.push(carrera);
+    return true;
   }
 
   agregarCorredor(corredor) {
+    const existe = this.corredores.some((c) => c.cedula === corredor.cedula);
+    if (existe) {
+      alert("Esa cédula ya fue registrada.");
+      return false;
+    }
+    if (corredor.edad < 18) {
+      alert("El corredor debe ser mayor de edad.");
+      return false;
+    }
     this.corredores.push(corredor);
+    return true;
   }
 
   agregarPatrocinador(patrocinador) {
+    if (!patrocinador.carreras || patrocinador.carreras.length === 0) {
+      alert("Debe seleccionar al menos una carrera.");
+      return false;
+    }
     let existente = this.patrocinadores.find((p) => p.nombre === patrocinador.nombre);
+
     if (!existente) {
       this.patrocinadores.push(patrocinador);
     } else {
       existente.rubro = patrocinador.rubro;
       existente.carreras = patrocinador.carreras;
     }
+    return true;
   }
 
   inscribirCorredor(corredor, carrera, numero) {
@@ -99,6 +135,12 @@ class Sistema {
       this.inscripciones.push(inscripcion);
       return true;
     }
+    if (this.inscripciones.some((i) => i.corredor === corredor && i.carrera === carrera)) {
+      alert("Este corredor ya está inscripto a esta carrera.");
+      return false;
+    }
     return false;
   }
+
+  // agregar ToString()
 }

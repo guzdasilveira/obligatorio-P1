@@ -3,12 +3,35 @@
 const sistema = new Sistema();
 
 // Referencias a botones
+document.getElementById("idBotonDatos").addEventListener("click", opcionDatos);
+document.getElementById("idBotonEstad").addEventListener("click", opcionEstadisticas);
 document.getElementById("idBotonAddCarr").addEventListener("click", agregarCarrera);
 document.getElementById("idBotonAgregarActualizar").addEventListener("click", agregarActualizarPatrocinador);
 document.getElementById("idBotonAgregarCorredor").addEventListener("click", agregarCorredor);
 document.getElementById("idBotonInscribir").addEventListener("click", inscribirCorredor);
 
 // Funciones
+
+function opcionDatos() {
+  this.style.fontWeight = "bold";
+  this.style.border = "solid";
+  this.style.borderRadius = "5px";
+  this.style.backgroundColor = "#C2C2C2";
+  document.getElementById("idBotonEstad").style = "default";
+  document.getElementById("sectionDatos").style.display = "block";
+  document.getElementById("sectionEstadisticas").style.display = "none";
+}
+
+function opcionEstadisticas() {
+  this.style.fontWeight = "bold";
+  this.style.border = "solid";
+  this.style.borderRadius = "5px";
+  this.style.backgroundColor = "#C2C2C2";
+  document.getElementById("idBotonDatos").style = "default";
+  document.getElementById("sectionEstadisticas").style.display = "block";
+  document.getElementById("sectionDatos").style.display = "none";
+}
+
 function agregarCarrera() {
   const nombre = document.getElementById("idNombre").value;
   const depto = document.getElementById("idDepartamento").value;
@@ -17,14 +40,21 @@ function agregarCarrera() {
 
   if (nombre && fecha && cupo > 0) {
     const nuevaCarrera = new Carrera(nombre, depto, fecha, cupo);
-    sistema.agregarCarrera(nuevaCarrera);
-    actualizarSelectCarreras();
-    alert("Carrera agregada con éxito.");
+    const agregada = sistema.agregarCarrera(nuevaCarrera);
+
+    if (agregada) {
+      actualizarSelectCarreras();
+      alert("Carrera agregada con éxito.");
+      // Vaciar los campos
+      document.getElementById("idNombre").value = "";
+      document.getElementById("idDepartamento").selectedIndex = 0;
+      document.getElementById("idFecha").value = "";
+      document.getElementById("idCupo").value = 30;
+    }
   } else {
     alert("Por favor, complete todos los campos correctamente.");
   }
 }
-
 function agregarActualizarPatrocinador() {
   const nombre = document.getElementById("idNombrePat").value;
   const rubro = document.getElementById("idRubro").value;
@@ -33,10 +63,14 @@ function agregarActualizarPatrocinador() {
 
   const carreras = sistema.carreras.filter((c) => carrerasSeleccionadas.includes(c.nombre));
   const patrocinador = new Patrocinador(nombre, rubro);
-  carreras.forEach((c) => patrocinador.agregarCarrera(c));
-  sistema.agregarPatrocinador(patrocinador);
 
-  alert("Patrocinador agregado o actualizado.");
+  carreras.forEach((c) => patrocinador.agregarCarrera(c));
+
+  const agregado = sistema.agregarPatrocinador(patrocinador);
+
+  if (agregado) {
+    alert("Patrocinador agregado o actualizado.");
+  }
 }
 
 function agregarCorredor() {
@@ -48,9 +82,11 @@ function agregarCorredor() {
 
   if (nombre && !isNaN(edad) && cedula && ficha) {
     const corredor = new Corredor(nombre, edad, cedula, ficha, esElite);
-    sistema.agregarCorredor(corredor);
-    actualizarSelectCorredores();
-    alert("Corredor agregado con éxito.");
+    const boolean = sistema.agregarCorredor(corredor);
+    if (boolean) {
+      actualizarSelectCorredores();
+      alert("Corredor agregado con éxito.");
+    }
   } else {
     alert("Por favor, complete todos los datos del corredor.");
   }
@@ -72,6 +108,7 @@ function inscribirCorredor() {
       alert("No se pudo inscribir. Verifique cupo o ficha médica.");
     }
   }
+  // TENEMOS QUE VER LO DE LA FICHA QUE SEA VALIDA
 }
 
 function actualizarSelectCarreras() {
@@ -80,9 +117,12 @@ function actualizarSelectCarreras() {
     document.getElementById("idCarreras"),
     document.getElementById("idCarrera"),
   ];
+
+  const carrerasOrdenadas = [...sistema.carreras].sort((a, b) => a.nombre.localeCompare(b.nombre));
+
   selects.forEach((select) => {
     select.innerHTML = "";
-    sistema.carreras.forEach((c) => {
+    carrerasOrdenadas.forEach((c) => {
       const opt = document.createElement("option");
       opt.value = c.nombre;
       opt.textContent = c.nombre;
@@ -94,10 +134,13 @@ function actualizarSelectCarreras() {
 function actualizarSelectCorredores() {
   const select = document.getElementById("idCorredores");
   select.innerHTML = "";
-  sistema.corredores.forEach((c) => {
+
+  const corredoresOrdenados = [...sistema.corredores].sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+  corredoresOrdenados.forEach((c) => {
     const opt = document.createElement("option");
     opt.value = c.nombre;
-    opt.textContent = c.nombre;
+    opt.textContent = c.nombre + " " + c.cedula;
     select.appendChild(opt);
   });
 }

@@ -40,27 +40,21 @@ function agregarCarrera() {
 
   if (nombre && fecha && cupo > 0) {
     const nuevaCarrera = new Carrera(nombre, depto, fecha, cupo);
-    sistema.agregarCarrera(nuevaCarrera);
-    actualizarSelectCarreras();
+    const agregada = sistema.agregarCarrera(nuevaCarrera);
 
-    // Seleccionar automáticamente la nueva carrera en los selects
-    document.getElementById("idCarrerasPat").value = nombre;
-    document.getElementById("idCarreras").value = nombre;
-    document.getElementById("idCarrera").value = nombre;
-
-    alert("Carrera agregada con éxito.");
-
-    // Vaciar los campos
-    document.getElementById("idNombre").value = "";
-    document.getElementById("idDepartamento").selectedIndex = 0;
-    document.getElementById("idFecha").value = "";
-    document.getElementById("idCupo").value = "";
-    document.getElementById("idNombre").focus();
+    if (agregada) {
+      actualizarSelectCarreras();
+      alert("Carrera agregada con éxito.");
+      // Vaciar los campos
+      document.getElementById("idNombre").value = "";
+      document.getElementById("idDepartamento").selectedIndex = 0;
+      document.getElementById("idFecha").value = "";
+      document.getElementById("idCupo").value = 30;
+    }
   } else {
     alert("Por favor, complete todos los campos correctamente.");
   }
 }
-
 function agregarActualizarPatrocinador() {
   const nombre = document.getElementById("idNombrePat").value;
   const rubro = document.getElementById("idRubro").value;
@@ -69,10 +63,14 @@ function agregarActualizarPatrocinador() {
 
   const carreras = sistema.carreras.filter((c) => carrerasSeleccionadas.includes(c.nombre));
   const patrocinador = new Patrocinador(nombre, rubro);
-  carreras.forEach((c) => patrocinador.agregarCarrera(c));
-  sistema.agregarPatrocinador(patrocinador);
 
-  alert("Patrocinador agregado o actualizado.");
+  carreras.forEach((c) => patrocinador.agregarCarrera(c));
+
+  const agregado = sistema.agregarPatrocinador(patrocinador);
+
+  if (agregado) {
+    alert("Patrocinador agregado o actualizado.");
+  }
 }
 
 function agregarCorredor() {
@@ -84,7 +82,9 @@ function agregarCorredor() {
 
   if (nombre && !isNaN(edad) && cedula && ficha) {
     const corredor = new Corredor(nombre, edad, cedula, ficha, esElite);
+
     sistema.agregarCorredor(corredor);
+
     actualizarSelectCorredores();
     alert("Corredor agregado con éxito.");
   } else {
@@ -117,7 +117,7 @@ function actualizarSelectCarreras() {
     document.getElementById("idCarrera"),
   ];
   selects.forEach((select) => {
-    //  select.innerHTML = "";
+    select.innerHTML = "";
     sistema.carreras.forEach((c) => {
       const opt = document.createElement("option");
       opt.value = c.nombre;

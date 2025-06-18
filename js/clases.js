@@ -23,6 +23,7 @@ class Carrera {
   cantidadInscriptos() {
     return this.inscripciones.length;
   }
+  // agregar ToString()
 }
 
 class Corredor {
@@ -33,6 +34,21 @@ class Corredor {
     this.fechaFicha = new Date(fechaFicha);
     this.esElite = esElite;
   }
+  esMayor() {
+    if (this.edad >= 18) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  cedulaUnica() {
+    for (let i = 0; i < this.cedula.length; i++) {
+      if (this.cedula === corredores.cedula[i]) {
+        alert("Esa cedula ya fue registrada.");
+        return false;
+      }
+    }
+  }
 
   tieneFichaVigente() {
     const today = new Date();
@@ -42,6 +58,7 @@ class Corredor {
     }
     return vigente;
   }
+  // agregar ToString()
 }
 
 class Inscripcion {
@@ -50,6 +67,7 @@ class Inscripcion {
     this.carrera = carrera;
     this.numero = numero;
   }
+  // agregar ToString()
 }
 
 class Patrocinador {
@@ -64,6 +82,7 @@ class Patrocinador {
       this.carreras.push(carrera);
     }
   }
+  // agregar ToString()
 }
 
 class Sistema {
@@ -75,21 +94,36 @@ class Sistema {
   }
 
   agregarCarrera(carrera) {
+    for (let i = 0; i < this.carreras.length; i++) {
+      if (this.carreras[i].nombre.toLowerCase() === carrera.nombre.toLowerCase()) {
+        alert("Ya existe una carrera con ese nombre.");
+        return false;
+      }
+    }
     this.carreras.push(carrera);
+    return true;
   }
 
   agregarCorredor(corredor) {
+    cedulaUnica();
+    esMayor();
     this.corredores.push(corredor);
   }
 
   agregarPatrocinador(patrocinador) {
+    if (!patrocinador.carreras || patrocinador.carreras.length === 0) {
+      alert("Debe seleccionar al menos una carrera.");
+      return false;
+    }
     let existente = this.patrocinadores.find((p) => p.nombre === patrocinador.nombre);
+
     if (!existente) {
       this.patrocinadores.push(patrocinador);
     } else {
       existente.rubro = patrocinador.rubro;
       existente.carreras = patrocinador.carreras;
     }
+    return true;
   }
 
   inscribirCorredor(corredor, carrera, numero) {
@@ -101,4 +135,5 @@ class Sistema {
     }
     return false;
   }
+  // agregar ToString()
 }

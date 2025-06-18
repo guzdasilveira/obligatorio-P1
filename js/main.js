@@ -96,12 +96,17 @@ function inscribirCorredor() {
   const nombreCorredor = document.getElementById("idCorredores").value;
   const nombreCarrera = document.getElementById("idCarreras").value;
 
-  const corredor = sistema.corredores.find((c) => c.nombre === nombreCorredor);
+  const corredorInsc = sistema.corredores.find((c) => c.nombre === nombreCorredor);
   const carrera = sistema.carreras.find((c) => c.nombre === nombreCarrera);
 
-  if (corredor && carrera) {
+  if (corredorInsc && carrera) {
+    if (corredorInsc.fechaFicha < carrera.fecha) {
+      alert("Tiene la ficha médica vencida");
+      console.log("pipe pruebas")
+      return;
+    }
     const numero = carrera.inscripciones.length + 1;
-    const exito = sistema.inscribirCorredor(corredor, carrera, numero);
+    const exito = sistema.inscribirCorredor(corredorInsc, carrera, numero);
     if (exito) {
       alert("Corredor inscrito con éxito.");
     } else {

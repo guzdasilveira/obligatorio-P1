@@ -48,10 +48,6 @@ class Corredor {
       }
     }
   }
-
-  tieneFichaVigente(carrera) {
-    return this.fechaFicha >= carrera.fecha;
-  }
   // agregar ToString()
 }
 
@@ -129,17 +125,15 @@ class Sistema {
   }
 
   inscribirCorredor(corredor, carrera, numero) {
-    if (carrera.hayCupo() && corredor.tieneFichaVigente()) {
+    if (this.inscripciones.some((i) => i.corredor === corredor && i.carrera === carrera)) {
+      alert("Este corredor ya está inscripto a esta carrera.");
+      return false;
+    } else {
       const inscripcion = new Inscripcion(corredor, carrera, numero);
       carrera.agregarInscripcion(inscripcion);
       this.inscripciones.push(inscripcion);
       return true;
     }
-    if (this.inscripciones.some((i) => i.corredor === corredor && i.carrera === carrera)) {
-      alert("Este corredor ya está inscripto a esta carrera.");
-      return false;
-    }
-    return false;
   }
 
   // agregar ToString()

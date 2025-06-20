@@ -83,7 +83,7 @@ function agregarCorredor() {
     tipoCorredor = "Deportista de Élite"
   }
   if (nombre && !isNaN(edad) && cedula && ficha) {
-    const corredor = new Corredor(nombre, edad, cedula, ficha, esElite);
+    const corredor = new Corredor(nombre, edad, cedula, ficha, tipoCorredor);
     const boolean = sistema.agregarCorredor(corredor);
     if (boolean) {
       actualizarSelectCorredores();
@@ -103,12 +103,19 @@ function inscribirCorredor() {
   const patrocinador = sistema.patrocinadores.find((c) => c.carrera === nombreCarrera);
 
 if (corredorInsc && carrera) {
-    const numero = carrera.inscripciones.length + 1;}
-    if (sistema.inscripciones.somesome((i) => i.corredor === corredor && i.carrera === carrera)) {
+    const numero = carrera.inscripciones.length + 1;
+    if (sistema.inscripciones.some((i) => i.corredor === corredor && i.carrera === carrera)) {
         alert("Este corredor ya está inscripto a esta carrera.");
         return;
     }
     if (numero >= carrera.cupo) {
+      /* ERROR. porque en inscripciones se guardan TODAS las inscripciones, no solo las de esta carrera.
+       Deberiamos:
+       1) recorrer inscripciones[] con un for, y establecer un contador con las inscripciones cuya carrera es la misma que la que tenemos seleccionada
+       2) o más facil, al pushear la primer inscripcion de una cierta carrera, definir un contador en 0, 
+       y si pusheamos una carrera ya pusheada, que le suba 1 a dicho contador, pero habría que asociar el contador a la carrera o inscripción.
+       3) Quizás en la clase carrera, podriamos definir un contador, con valor 0, y que al pushear una inscripción, le suba 1 a ese contador
+       La opcion 3 me parece BRILLANTE! */
         alert("no hay más cupos");
         return;
     }
@@ -117,13 +124,22 @@ if (corredorInsc && carrera) {
         return;
     }
     sistema.inscribirCorredor(corredorInsc, carrera, numero);
-    console.log(`¡Inscripción realizada con éxito!
-    Número: ${numero}
-    Nombre: ${corredorInsc.nombre} ${corredorInsc.edad} años, CI: ${corredorInsc.cedula} Ficha Médica ${corredorInsc.fechaFicha}
-    ${corredorInsc.tipoCorredor}
-    Carrera: ${carrera.nombre} en ${carrera.departamento} el ${carrera.fecha} Cupo: ${carrera.cupo}
-    ${patrocinador.nombre} (${patrocinador.rubro})`);
-    }
+    // PARA MOSTRAR EL ALERT QUE EJMPLIFICA LA LETRA
+    if (patrocinador = undefined) {
+      console.log(`¡Inscripción realizada con éxito!
+      Número: ${numero}
+      Nombre: ${corredorInsc.nombre} ${corredorInsc.edad} años, CI: ${corredorInsc.cedula} Ficha Médica ${corredorInsc.fechaFicha}
+      ${corredorInsc.tipoCorredor}
+      Carrera: ${carrera.nombre} en ${carrera.departamento} el ${carrera.fecha} Cupo: ${carrera.cupo}`)
+    } else {
+      console.log(`¡Inscripción realizada con éxito!
+      Número: ${numero}
+      Nombre: ${corredorInsc.nombre} ${corredorInsc.edad} años, CI: ${corredorInsc.cedula} Ficha Médica ${corredorInsc.fechaFicha}
+      ${corredorInsc.tipoCorredor}
+      Carrera: ${carrera.nombre} en ${carrera.departamento} el ${carrera.fecha} Cupo: ${carrera.cupo}
+      ${patrocinador.nombre} (${patrocinador.rubro})`);
+    } }
+  }
 
 function actualizarSelectCarreras() {
   const selects = [

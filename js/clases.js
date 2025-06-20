@@ -6,7 +6,6 @@ class Carrera {
     this.departamento = departamento;
     this.fecha = new Date(fecha);
     this.cupo = cupo;
-    this.inscripciones= [];
   }
   // agregar ToString()
 }
@@ -110,22 +109,19 @@ class Sistema {
     return true;
   }
 
-inscribirCorredor(corredor, carrera, numero) {
-    const inscripcion = new Inscripcion(corredor, carrera, numero);
-    carrera.agregarInscripcion(inscripcion);
-    this.inscripciones.push(inscripcion);
-    return true;
-}
+  inscribirCorredor(corredor, carrera, numero) {
+      const inscripcion = new Inscripcion(corredor, carrera, numero);
+      this.inscripciones.push(inscripcion);
+      return true;
+  }
 
 //ESTADISTICAS
   promedioInscriptos() {
     if (this.carreras.length<1) {
       return "sin datos";
     } else {
-    const promedio= (Sistema.carreras.length+1)/Sistema.inscripciones.length+1);
+    const promedio= (this.inscripciones.length+1)/(this.carreras.length+1);
     return promedio;
     }
-}
-
-
-
+  }
+} 

@@ -10,6 +10,7 @@ document.getElementById("idBotonAgregarActualizar").addEventListener("click", ag
 document.getElementById("idBotonAgregarCorredor").addEventListener("click", agregarCorredor);
 document.getElementById("idBotonInscribir").addEventListener("click", inscribirCorredor);
 
+
 // Funciones
 
 function opcionDatos() {
@@ -124,6 +125,8 @@ if (corredorInsc && carrera) {
         return;
     }
     sistema.inscribirCorredor(corredorInsc, carrera, numero);
+    carrera.contadorSeparado++; // para que suba el contador de inscriptos de c/carrera
+
     // PARA MOSTRAR EL ALERT QUE EJMPLIFICA LA LETRA
     if (patrocinador = undefined) {
       console.log(`¡Inscripción realizada con éxito!
@@ -176,3 +179,42 @@ function actualizarSelectCorredores() {
 }
 
 //ESTADISTICAS
+google.charts.load('current', {
+  'packages': ['geochart'],
+});
+google.charts.setOnLoadCallback(drawRegionsMap);
+
+function drawRegionsMap() {
+  var data = google.visualization.arrayToDataTable([
+    ['Region', 'Inscriptos'],
+    ['UY-AR', 50],   // Artigas
+    ['UY-CA', 100],  // Canelones
+    ['UY-CL', 30],   // Cerro Largo
+    ['UY-CO', 25],   // Colonia
+    ['UY-DU', 60],   // Durazno
+    ['UY-FD', 40],   // Florida
+    ['UY-FS', 35],   // Flores
+    ['UY-LA', 45],   // Lavalleja
+    ['UY-MA', 90],   // Maldonado
+    ['UY-MO', 200],  // Montevideo
+    ['UY-PA', 70],   // Paysandú
+    ['UY-RN', 20],   // Río Negro
+    ['UY-RV', 55],   // Rivera
+    ['UY-RO', 80],   // Rocha
+    ['UY-SA', 65],   // Salto
+    ['UY-SJ', 33],   // San José
+    ['UY-SO', 28],   // Soriano
+    ['UY-TA', 50],   // Tacuarembó
+    ['UY-TT', 15]    // Treinta y Tres
+  ]);
+
+  var options = {
+    region: 'UY',
+    resolution: 'provinces',
+    displayMode: 'regions',
+    colorAxis: { colors: ['#e0f3f8', '#0868ac'] }
+  };
+
+  var chart = new google.visualization.GeoChart(document.getElementById('mapa_uruguay'));
+  chart.draw(data, options);
+}

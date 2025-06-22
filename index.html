@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" type="text/css" href="../css/estilos.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <title>Sitio de Corredores</title>
   </head>
 
   <body>
-    <header></header>
     <h1>Sitio de corredores</h1>
     <img src="../img/Corredores-de-Uruguay.jpg" alt="Foto inspiracional maraton" width="400" />
 
@@ -122,7 +122,7 @@
       </article>
     </section>
 
-    <section id="sectionEstadisticas">
+    <section id="sectionEstadisticas" >
       <h2>Estadísticas</h2>
 
       <article>
@@ -172,10 +172,13 @@
 
       <article class="mapa">
         <h3>Visualizar mapa:</h3>
-
+    
         <input type="radio" name="OrdenarCarreraInscripciones" id="idPorCarreras" class="radio" checked /> Por
         Carreras <input type="radio" name="OrdenarCarreraInscripciones" id="idPorInsc" class="radio" /> Por
         Inscripciones <br /><br /><br />
+
+        <div id="mapa_uruguay" style="width: 900px; height: 600px;"></div>
+
       </article>
     </section>
 

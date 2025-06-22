@@ -1,14 +1,16 @@
 // Autores: Guzmán Da Silveira y Felipe Martínez
 
 class Carrera {
-  constructor(nombre, departamento, fecha, cupo) {
+  constructor(nombre, departamento, fecha, cupo, contadorPorCarrera) {
     this.nombre = nombre;
     this.departamento = departamento;
     this.fecha = new Date(fecha);
     this.cupo = cupo;
+    this.contadorPorCarrera = contadorPorCarrera;
+    this.contadorPorCarrera = 0;
   }
   // agregar ToString()
-}
+} 
 
 class Corredor {
   constructor(nombre, edad, cedula, fechaFicha, tipoCorredor) {

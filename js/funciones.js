@@ -21,11 +21,21 @@ window.addEventListener("load", () => {
 });
 
 function opcionDatos() {
+  this.style.fontWeight = "bold";
+  this.style.border = "solid";
+  this.style.borderRadius = "5px";
+  this.style.backgroundColor = "#C2C2C2";
+  document.getElementById("idBotonEstad").style="default";
   document.getElementById("sectionDatos").style.display = "block";
   document.getElementById("sectionEstadisticas").style.display = "none";
 }
 
 function opcionEstadisticas() {
+  this.style.fontWeight = "bold";
+  this.style.border = "solid";
+  this.style.borderRadius = "5px";
+  this.style.backgroundColor = "#C2C2C2";
+  document.getElementById("idBotonDatos").style="defualt";
   document.getElementById("sectionDatos").style.display = "none";
   document.getElementById("sectionEstadisticas").style.display = "block";
   mostrarEstadisticas();
@@ -100,11 +110,10 @@ function inscribirCorredor() {
   }
 
   if (!corredor || !carrera) {
-    return alert("Seleccione un corredor y una carrera");
+    alert("Seleccione un corredor y una carrera");
   }
 
-  const yaInscripto = sistema.inscripciones.some((i) => i.corredor === corredor && i.carrera === carrera);
-  if (yaInscripto) return alert("Corredor ya inscripto");
+  inscripcionPrevia ();
 
   console.log("Fecha de carrera:", carrera.fecha);
   console.log("Fecha ficha médica:", corredor.fechaFicha);
@@ -117,18 +126,61 @@ function inscribirCorredor() {
   console.log("Fecha carrera normalizada:", fechaCarrera);
   console.log("Fecha ficha normalizada:", fechaFicha);
 
-  if (fechaFicha < fechaCarrera) {
-    return alert("Ficha médica vencida para esta carrera");
-  }
+  validarVigencia (fechaFicha, fechaCarrera);
+  validarCupo(carrera.contadorPorCarrera, carrera.cupo);
 
-  if (carrera.contadorPorCarrera >= carrera.cupo) {
-    return alert("Cupo agotado");
+  if (corredor && carrera && inscripcionPrevia && validarVigencia && validarCupo) {
+    carrera.contadorPorCarrera++;
+    sistema.inscribirCorredor(corredor, carrera, carrera.contadorPorCarrera);
+    alert("Inscripción realizada con éxito");
+    mostrarInscriptos();
   }
+}
 
-  carrera.contadorPorCarrera++;
-  sistema.inscribirCorredor(corredor, carrera, carrera.contadorPorCarrera);
-  alert("Inscripción realizada con éxito");
-  mostrarInscriptos();
+function inscripcionPrevia () {
+  let yaInscripto = false;
+  let i = 0;
+  while (i < sistema.inscripciones.length && yaInscripto == false) {
+    if ((sistema.inscripciones[i].corredor == corredor) && (sistema.inscripciones[i].carrera == carrera)) {
+        yaInscripto = true;
+        alert ("Corredor ya inscripto");
+        return true;
+      }
+    }
+    i = i + 1;
+}
+
+function validarVigencia (fichaMedica, fechaCarrera){
+  if(fichaMedica<fechaCarrera) {
+    alert("Ficha médica vencida para esta carrera");
+  } else {
+    return true;
+  }
+}
+
+function validarCupo (contador, cupo) {
+  if (contador >= cupo) {
+    alert("Cupos agotados");
+  }else {
+    return true;
+  }
+}
+
+function inscripcionExitosa(numero, corredor, carrera, patrocinador) {
+  if (patrocinador = undefined) {
+  console.log(`¡Inscripción realizada con éxito!
+  Número: ${numero}
+  Nombre: ${corredor.nombre} ${corredor.edad} años, CI: ${corredor.cedula} Ficha Médica ${corredor.fechaFicha}
+  ${corredor.tipoCorredor}
+  Carrera: ${carrera.nombre} en ${carrera.departamento} el ${carrera.fecha} Cupo: ${carrera.cupo}`)
+  } else {
+    console.log(`¡Inscripción realizada con éxito!
+    Número: ${numero}
+    Nombre: ${corredorInsc.nombre} ${corredorInsc.edad} años, CI: ${corredorInsc.cedula} Ficha Médica ${corredorInsc.fechaFicha}
+    ${corredor.tipoCorredor}
+    Carrera: ${carrera.nombre} en ${carrera.departamento} el ${carrera.fecha} Cupo: ${carrera.cupo}
+    ${patrocinador.nombre} (${patrocinador.rubro})`);
+    }
 }
 
 function actualizarSelectCarreras() {
@@ -227,7 +279,12 @@ function mostrarEstadisticas() {
   // % Elite
   const elite = sistema.corredores.filter((c) => c.tipoCorredor === "Deportista de Élite").length;
   const total = sistema.corredores.length;
-  const porcentaje = total > 0 ? ((elite / total) * 100).toFixed(2) : 0;
+  const porcentaje = null;
+  if (total < 0) {
+    porcentaje="sin datos";
+  } else {
+    porcentaje=((elite / total) * 100).toFixed(2);
+  }
   document.getElementById("lblPorcentaje").textContent = `Porcentaje de corredores de élite: ${porcentaje}%`;
 }
 

@@ -92,16 +92,19 @@ class Sistema {
     }
 
     let yaExiste = false;
-    for (let i = 0; i < this.patrocinadores.length; i++) {
+    let i= 0;
+    while ((i < this.patrocinadores.length) && (yaExiste == false)) {
       if (this.patrocinadores[i].nombre === patrocinador.nombre) {
         this.patrocinadores[i].rubro = patrocinador.rubro;
         this.patrocinadores[i].carreras = patrocinador.carreras;
         yaExiste = true;
-        break;
       }
+      i++;
     }
-    if (!yaExiste) this.patrocinadores.push(patrocinador);
-    return true;
+    if (!yaExiste) {
+      this.patrocinadores.push(patrocinador);
+      return true;
+    }
   }
 
   inscribirCorredor(corredor, carrera, numero) {

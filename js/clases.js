@@ -92,8 +92,8 @@ class Sistema {
     }
 
     let yaExiste = false;
-    let i= 0;
-    while ((i < this.patrocinadores.length) && (yaExiste == false)) {
+    let i = 0;
+    while (i < this.patrocinadores.length && yaExiste == false) {
       if (this.patrocinadores[i].nombre === patrocinador.nombre) {
         this.patrocinadores[i].rubro = patrocinador.rubro;
         this.patrocinadores[i].carreras = patrocinador.carreras;
@@ -116,11 +116,13 @@ class Sistema {
 
   promedioInscriptos() {
     if (this.carreras.length === 0) return "sin datos";
-    let suma = 0;
-    for (let i = 0; i < this.carreras.length; i++) {
-      suma += this.carreras[i].contadorPorCarrera;
+    else {
+      let suma = 0;
+      for (let i = 0; i < this.carreras.length; i++) {
+        suma += this.carreras[i].contadorPorCarrera;
+      }
+      return (suma / this.carreras.length).toFixed(2);
     }
-    return (suma / this.carreras.length).toFixed(2);
   }
 
   porcentajeElite() {
@@ -165,6 +167,12 @@ class Sistema {
     }
     return conteo;
   }
+  // crearPdf(mensaje) {
+  //   const { jsPDF } = window.jspdf;
+  //   let pdf = new jsPDF();
+  //   pdf.text(mensaje, 10, 10);
+  //   pdf.save("mensaje.pdf");
+  // }
 }
 
 function drawRegionsMap() {

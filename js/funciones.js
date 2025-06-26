@@ -25,7 +25,7 @@ function opcionDatos() {
   this.style.border = "solid";
   this.style.borderRadius = "5px";
   this.style.backgroundColor = "#C2C2C2";
-  document.getElementById("idBotonEstad").style="default";
+  document.getElementById("idBotonEstad").style = "default";
   document.getElementById("sectionDatos").style.display = "block";
   document.getElementById("sectionEstadisticas").style.display = "none";
 }
@@ -35,7 +35,7 @@ function opcionEstadisticas() {
   this.style.border = "solid";
   this.style.borderRadius = "5px";
   this.style.backgroundColor = "#C2C2C2";
-  document.getElementById("idBotonDatos").style="defualt";
+  document.getElementById("idBotonDatos").style = "defualt";
   document.getElementById("sectionDatos").style.display = "none";
   document.getElementById("sectionEstadisticas").style.display = "block";
   mostrarEstadisticas();
@@ -51,6 +51,7 @@ function agregarCarrera() {
     if (sistema.agregarCarrera(nuevaCarrera)) {
       actualizarSelectCarreras();
       alert("Carrera agregada con éxito");
+      drawRegionsMap();
     }
   } else {
     alert("Complete todos los campos correctamente");
@@ -111,76 +112,97 @@ function inscribirCorredor() {
 
   if (!corredor || !carrera) {
     alert("Seleccione un corredor y una carrera");
+    return;
   }
 
-  inscripcionPrevia ();
-
-  console.log("Fecha de carrera:", carrera.fecha);
-  console.log("Fecha ficha médica:", corredor.fechaFicha);
+  inscripcionPrevia();
 
   const fechaCarrera = new Date(carrera.fecha);
   const fechaFicha = new Date(corredor.fechaFicha);
-  fechaCarrera.setHours(0, 0, 0, 0);
-  fechaFicha.setHours(0, 0, 0, 0);
 
-  console.log("Fecha carrera normalizada:", fechaCarrera);
-  console.log("Fecha ficha normalizada:", fechaFicha);
-
-  validarVigencia (fechaFicha, fechaCarrera);
+  validarVigencia(fechaFicha, fechaCarrera);
   validarCupo(carrera.contadorPorCarrera, carrera.cupo);
 
-  if (corredor && carrera && inscripcionPrevia && validarVigencia && validarCupo) {
-    carrera.contadorPorCarrera++;
-    sistema.inscribirCorredor(corredor, carrera, carrera.contadorPorCarrera);
-    alert("Inscripción realizada con éxito");
+  if (
+    corredor &&
+    carrera &&
+    validarVigencia(fechaFicha, fechaCarrera) &&
+    validarCupo(carrera.contadorPorCarrera, carrera.cupo)
+  ) {
+    sistema.inscribirCorredor(corredor, carrera, carrera.contadorPorCarrera + 1);
+    inscripcionExitosa(carrera.contadorPorCarrera, corredor, carrera);
     mostrarInscriptos();
+    drawRegionsMap();
   }
 }
 
-function inscripcionPrevia () {
-  let yaInscripto = false;
-  let i = 0;
-  while (i < sistema.inscripciones.length && yaInscripto == false) {
-    if ((sistema.inscripciones[i].corredor == corredor) && (sistema.inscripciones[i].carrera == carrera)) {
-        yaInscripto = true;
-        alert ("Corredor ya inscripto");
-        return true;
-      }
+function inscripcionPrevia(corredor, carrera) {
+  for (let i = 0; i < sistema.inscripciones.length; i++) {
+    if (sistema.inscripciones[i].corredor === corredor && sistema.inscripciones[i].carrera === carrera) {
+      alert("Corredor ya inscripto");
+      return true;
     }
-    i = i + 1;
+  }
+  return false;
 }
 
-function validarVigencia (fichaMedica, fechaCarrera){
-  if(fichaMedica<fechaCarrera) {
+function validarVigencia(fichaMedica, fechaCarrera) {
+  if (fichaMedica < fechaCarrera) {
     alert("Ficha médica vencida para esta carrera");
   } else {
     return true;
   }
 }
 
-function validarCupo (contador, cupo) {
+function validarCupo(contador, cupo) {
   if (contador >= cupo) {
     alert("Cupos agotados");
-  }else {
+  } else {
     return true;
   }
 }
+function formatearFecha(fecha) {
+  const d = new Date(fecha);
+  const dia = d.getDate().toString().padStart(2, "0");
+  const mes = (d.getMonth() + 1).toString().padStart(2, "0");
+  const anio = d.getFullYear();
+  return `${dia}/${mes}/${anio}`;
+}
 
-function inscripcionExitosa(numero, corredor, carrera, patrocinador) {
-  if (patrocinador = undefined) {
-  console.log(`¡Inscripción realizada con éxito!
+function inscripcionExitosa(numero, corredor, carrera) {
+  let mensaje = `¡Inscripción realizada con éxito!
   Número: ${numero}
-  Nombre: ${corredor.nombre} ${corredor.edad} años, CI: ${corredor.cedula} Ficha Médica ${corredor.fechaFicha}
+  Nombre: ${corredor.nombre} ${corredor.edad} años, CI: ${corredor.cedula} Ficha Médica ${formatearFecha(
+    corredor.fechaFicha
+  )}
   ${corredor.tipoCorredor}
-  Carrera: ${carrera.nombre} en ${carrera.departamento} el ${carrera.fecha} Cupo: ${carrera.cupo}`)
-  } else {
-    console.log(`¡Inscripción realizada con éxito!
-    Número: ${numero}
-    Nombre: ${corredorInsc.nombre} ${corredorInsc.edad} años, CI: ${corredorInsc.cedula} Ficha Médica ${corredorInsc.fechaFicha}
-    ${corredor.tipoCorredor}
-    Carrera: ${carrera.nombre} en ${carrera.departamento} el ${carrera.fecha} Cupo: ${carrera.cupo}
-    ${patrocinador.nombre} (${patrocinador.rubro})`);
+  Carrera: ${carrera.nombre} en ${carrera.departamento} el ${formatearFecha(carrera.fecha)} Cupo: ${
+    carrera.cupo
+  }`;
+
+  let textoPatrocinadores = "";
+  for (let i = 0; i < sistema.patrocinadores.length; i++) {
+    if (sistema.patrocinadores[i].carrera === carrera) {
+      if (textoPatrocinadores == "") {
+        textoPatrocinadores = sistema.patrocinadores[i].nombre + " (" + sistema.patrocinadores[i].rubro + ")";
+      } else {
+        textoPatrocinadores =
+          textoPatrocinadores +
+          " / " +
+          sistema.patrocinadores[i].nombre +
+          " (" +
+          sistema.patrocinadores[i].rubro +
+          ")";
+      }
     }
+  }
+  if (textoPatrocinadores !== "") {
+    mensaje =
+      mensaje +
+      `
+    ${textoPatrocinadores};`;
+  }
+  alert(mensaje);
 }
 
 function actualizarSelectCarreras() {
@@ -245,47 +267,70 @@ function mostrarInscriptos() {
     <td style="border: 1px solid black;">${insc.corredor.fechaFicha.toLocaleDateString()}</td>
     <td style="border: 1px solid black;">${insc.numero}</td>`;
 
-    if (insc.corredor.tipoCorredor === "Deportista de Élite") fila.background.color = "red";
+    if (insc.corredor.tipoCorredor === "Deportista de Élite") fila.style.backgroundColor = "red";
     tabla.appendChild(fila);
   }
 }
 
 function mostrarEstadisticas() {
+  const promedio = sistema.promedioInscriptos();
   document.getElementById("lblPromedio").textContent =
-    "Promedio de inscriptos por carrera: " + sistema.promedioInscriptos();
+    "Promedio de inscriptos por carrera: " + (promedio !== "Sin datos" ? promedio : "sin datos");
+
+  //sin inscriptos
   const carrerasSinInscriptos = sistema.carreras.filter((c) => c.contadorPorCarrera === 0);
-  const ul = document.querySelector("ul");
+  const ul = document.getElementById("ulSinInscriptos");
   ul.innerHTML = "";
-  carrerasSinInscriptos
-    .sort((a, b) => a.fecha - b.fecha)
-    .forEach((c) => {
-      const li = document.createElement("li");
-      li.textContent = `${c.nombre} (${c.fecha.toLocaleDateString()})`;
-      ul.appendChild(li);
-    });
-  // Más inscriptos
+  if (carrerasSinInscriptos.length === 0) {
+    const li = document.createElement("li");
+    li.textContent = "sin datos";
+    ul.appendChild(li);
+  } else {
+    carrerasSinInscriptos
+      .sort((a, b) => a.fecha - b.fecha)
+      .forEach((c) => {
+        const li = document.createElement("li");
+        li.textContent = `${c.nombre} (${c.fecha.toLocaleDateString()})`;
+        ul.appendChild(li);
+      });
+  }
+
+  //mas inscriptos
   let max = 0;
   let nombres = [];
   for (let i = 0; i < sistema.carreras.length; i++) {
     if (sistema.carreras[i].contadorPorCarrera > max) {
       max = sistema.carreras[i].contadorPorCarrera;
       nombres = [sistema.carreras[i].nombre];
-    } else if (sistema.carreras[i].contadorPorCarrera === max) {
+    } else if (sistema.carreras[i].contadorPorCarrera === max && max > 0) {
       nombres.push(sistema.carreras[i].nombre);
     }
   }
-  document.getElementById("lblMasInscriptos").textContent =
-    "Carrera/s con más inscriptos: " + nombres.join(", ");
-  // % Elite
+
+  const ulMas = document.getElementById("ulMasInscriptos");
+  ulMas.innerHTML = "";
+  if (nombres.length === 0) {
+    const li = document.createElement("li");
+    li.textContent = "sin datos";
+    ulMas.appendChild(li);
+  } else {
+    nombres.forEach((nombre) => {
+      const li = document.createElement("li");
+      li.textContent = nombre;
+      ulMas.appendChild(li);
+    });
+  }
+
+  //% Elite
   const elite = sistema.corredores.filter((c) => c.tipoCorredor === "Deportista de Élite").length;
   const total = sistema.corredores.length;
-  const porcentaje = null;
-  if (total < 0) {
-    porcentaje="sin datos";
+  let porcentaje;
+  if (total === 0) {
+    porcentaje = "sin datos";
   } else {
-    porcentaje=((elite / total) * 100).toFixed(2);
+    porcentaje = ((elite / total) * 100).toFixed(2) + "%";
   }
-  document.getElementById("lblPorcentaje").textContent = `Porcentaje de corredores de élite: ${porcentaje}%`;
+  document.getElementById("lblPorcentaje").textContent = "Porcentaje de corredores de élite: " + porcentaje;
 }
 
 google.charts.load("current", {

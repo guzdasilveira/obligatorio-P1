@@ -116,7 +116,7 @@ class Sistema {
 
   promedioInscriptos() {
     if (this.carreras.length === 0) return "sin datos";
-    else {
+    else { 
       let suma = 0;
       for (let i = 0; i < this.carreras.length; i++) {
         suma += this.carreras[i].contadorPorCarrera;
@@ -167,12 +167,6 @@ class Sistema {
     }
     return conteo;
   }
-  // crearPdf(mensaje) {
-  //   const { jsPDF } = window.jspdf;
-  //   let pdf = new jsPDF();
-  //   pdf.text(mensaje, 10, 10);
-  //   pdf.save("mensaje.pdf");
-  // }
 }
 
 function drawRegionsMap() {

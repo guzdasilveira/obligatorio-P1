@@ -112,27 +112,17 @@ function inscribirCorredor() {
 
   if (!corredor || !carrera) {
     alert("Seleccione un corredor y una carrera");
-    return;
-  }
+  } else {
 
-  inscripcionPrevia();
+    const fechaCarrera = new Date(carrera.fecha);
+    const fechaFicha = new Date(corredor.fechaFicha);
 
-  const fechaCarrera = new Date(carrera.fecha);
-  const fechaFicha = new Date(corredor.fechaFicha);
-
-  validarVigencia(fechaFicha, fechaCarrera);
-  validarCupo(carrera.contadorPorCarrera, carrera.cupo);
-
-  if (
-    corredor &&
-    carrera &&
-    validarVigencia(fechaFicha, fechaCarrera) &&
-    validarCupo(carrera.contadorPorCarrera, carrera.cupo)
-  ) {
-    sistema.inscribirCorredor(corredor, carrera, carrera.contadorPorCarrera + 1);
-    inscripcionExitosa(carrera.contadorPorCarrera, corredor, carrera);
-    mostrarInscriptos();
-    drawRegionsMap();
+    if (inscripcionPrevia(corredor, carrera) && validarVigencia(fechaFicha, fechaCarrera) && validarCupo(carrera.contadorPorCarrera, carrera.cupo)) {
+      sistema.inscribirCorredor(corredor, carrera, carrera.contadorPorCarrera + 1);
+      inscripcionExitosa(carrera.contadorPorCarrera, corredor, carrera);
+      mostrarInscriptos();
+      drawRegionsMap();
+    }
   }
 }
 
@@ -140,15 +130,16 @@ function inscripcionPrevia(corredor, carrera) {
   for (let i = 0; i < sistema.inscripciones.length; i++) {
     if (sistema.inscripciones[i].corredor === corredor && sistema.inscripciones[i].carrera === carrera) {
       alert("Corredor ya inscripto");
-      return true;
+      return false;
     }
   }
-  return false;
+  return true;
 }
 
 function validarVigencia(fichaMedica, fechaCarrera) {
   if (fichaMedica < fechaCarrera) {
     alert("Ficha médica vencida para esta carrera");
+    return false;
   } else {
     return true;
   }
@@ -157,6 +148,7 @@ function validarVigencia(fichaMedica, fechaCarrera) {
 function validarCupo(contador, cupo) {
   if (contador >= cupo) {
     alert("Cupos agotados");
+    return false;
   } else {
     return true;
   }
@@ -170,40 +162,45 @@ function formatearFecha(fecha) {
 }
 
 function inscripcionExitosa(numero, corredor, carrera) {
+  let textoPatrocinadores = "";
+  for (let i = 0; i < sistema.patrocinadores.length; i++) {
+  let carrerasPat = sistema.patrocinadores[i].carreras;
+  for (let j = 0; j < carrerasPat.length; j++) {
+    if (carrerasPat[j] === carrera) {
+      if (textoPatrocinadores.length === 0) {
+        textoPatrocinadores = sistema.patrocinadores[i].nombre + " (" + sistema.patrocinadores[i].rubro + ")";
+      } else {
+        textoPatrocinadores = textoPatrocinadores + " / " + sistema.patrocinadores[i].nombre + " (" + sistema.patrocinadores[i].rubro + ")";
+      }
+    }
+  }
+}
   let mensaje = `¡Inscripción realizada con éxito!
   Número: ${numero}
   Nombre: ${corredor.nombre} ${corredor.edad} años, CI: ${corredor.cedula} Ficha Médica ${formatearFecha(
     corredor.fechaFicha
   )}
   ${corredor.tipoCorredor}
-  Carrera: ${carrera.nombre} en ${carrera.departamento} el ${formatearFecha(carrera.fecha)} Cupo: ${
-    carrera.cupo
-  }`;
-
-  let textoPatrocinadores = "";
-  for (let i = 0; i < sistema.patrocinadores.length; i++) {
-    if (sistema.patrocinadores[i].carrera === carrera) {
-      if (textoPatrocinadores == "") {
-        textoPatrocinadores = sistema.patrocinadores[i].nombre + " (" + sistema.patrocinadores[i].rubro + ")";
-      } else {
-        textoPatrocinadores =
-          textoPatrocinadores +
-          " / " +
-          sistema.patrocinadores[i].nombre +
-          " (" +
-          sistema.patrocinadores[i].rubro +
-          ")";
-      }
-    }
-  }
-  if (textoPatrocinadores !== "") {
-    mensaje =
-      mensaje +
-      `
-    ${textoPatrocinadores};`;
-  }
+  Carrera: ${carrera.nombre} en ${carrera.departamento} el ${formatearFecha(carrera.fecha)} Cupo: ${carrera.cupo}
+  ${textoPatrocinadores}`;  
   alert(mensaje);
+   try {
+    generarPDFInscripcion(mensaje, corredor, carrera, numero);
+  } catch (error) {
+    console.error("Error al generar el PDF:", error);
+  }
 }
+
+function generarPDFInscripcion(mensaje, corredor, carrera, numero) {
+  const doc = new window.jspdf.jsPDF();
+
+  doc.setFontSize(12);
+  doc.text(mensaje, 10, 20);
+
+  const nombreArchivo = `Inscripcion_${corredor.nombre.replaceAll(" ", "_")}_${carrera.nombre.replaceAll(" ", "_")}_${numero}.pdf`;
+  doc.save(nombreArchivo);
+}
+
 
 function actualizarSelectCarreras() {
   const selects = ["idCarrerasPat", "idCarreras", "idCarrera"];

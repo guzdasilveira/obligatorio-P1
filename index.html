@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/estilos.css" />
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <!-- <script src="js/jspdf.umd.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <title>Sitio de Corredores</title>
   </head>
   <body>
@@ -160,9 +160,8 @@
 
       <article class="mapa">
         <h3>Visualizar mapa:</h3>
-        <input type="radio" name="OrdenarCarreraInscripciones" id="idPorCarreras" class="radio" checked /> Por
-        Carreras <input type="radio" name="OrdenarCarreraInscripciones" id="idPorInsc" class="radio" /> Por
-        Inscripciones <br /><br /><br />
+        <input type="radio" name="OrdenarCarreraInscripciones" id="idPorCarreras" class="radio" checked /> PorCarreras 
+        <input type="radio" name="OrdenarCarreraInscripciones" id="idPorInsc" class="radio" /> PorInscripciones <br /><br />
         <div id="mapa_uruguay" style="width: 600px; height: 400px"></div>
       </article>
     </section>

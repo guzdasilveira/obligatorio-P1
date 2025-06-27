@@ -184,11 +184,7 @@ function inscripcionExitosa(numero, corredor, carrera) {
   Carrera: ${carrera.nombre} en ${carrera.departamento} el ${formatearFecha(carrera.fecha)} Cupo: ${carrera.cupo}
   ${textoPatrocinadores}`;  
   alert(mensaje);
-   try {
-    generarPDFInscripcion(mensaje, corredor, carrera, numero);
-  } catch (error) {
-    console.error("Error al generar el PDF:", error);
-  }
+  generarPDFInscripcion(mensaje, corredor, carrera, numero);
 }
 
 function generarPDFInscripcion(mensaje, corredor, carrera, numero) {

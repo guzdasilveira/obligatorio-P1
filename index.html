@@ -22,93 +22,101 @@
       <h2>Datos</h2>
       <article>
         <h3>Carreras</h3>
-        <label for="idNombre">Nombre:</label>
-        <input type="text" id="idNombre" />
+        <form id="formCarreras">
+          <label for="idNombre">Nombre:</label>
+          <input type="text" id="idNombre" />
 
-        <label for="idDepartamento">Departamento:</label>
-        <select id="idDepartamento">
-          <option value="Montevideo">Montevideo</option>
-          <option value="Canelones">Canelones</option>
-          <option value="Maldonado">Maldonado</option>
-          <option value="Rocha">Rocha</option>
-          <option value="Treinta y Tres">Treinta y Tres</option>
-          <option value="Cerro Largo">Cerro Largo</option>
-          <option value="Rivera">Rivera</option>
-          <option value="Artigas">Artigas</option>
-          <option value="Salto">Salto</option>
-          <option value="Paysandú">Paysandú</option>
-          <option value="Río Negro">Río Negro</option>
-          <option value="Soriano">Soriano</option>
-          <option value="Colonia">Colonia</option>
-          <option value="San José">San José</option>
-          <option value="Flores">Flores</option>
-          <option value="Florida">Florida</option>
-          <option value="Lavalleja">Lavalleja</option>
-          <option value="Durazno">Durazno</option>
-          <option value="Tacuarembó">Tacuarembó</option>
-        </select>
+          <label for="idDepartamento">Departamento:</label>
+          <select id="idDepartamento">
+            <option value="Montevideo">Montevideo</option>
+            <option value="Canelones">Canelones</option>
+            <option value="Maldonado">Maldonado</option>
+            <option value="Rocha">Rocha</option>
+            <option value="Treinta y Tres">Treinta y Tres</option>
+            <option value="Cerro Largo">Cerro Largo</option>
+            <option value="Rivera">Rivera</option>
+            <option value="Artigas">Artigas</option>
+            <option value="Salto">Salto</option>
+            <option value="Paysandú">Paysandú</option>
+            <option value="Río Negro">Río Negro</option>
+            <option value="Soriano">Soriano</option>
+            <option value="Colonia">Colonia</option>
+            <option value="San José">San José</option>
+            <option value="Flores">Flores</option>
+            <option value="Florida">Florida</option>
+            <option value="Lavalleja">Lavalleja</option>
+            <option value="Durazno">Durazno</option>
+            <option value="Tacuarembó">Tacuarembó</option>
+          </select>
 
-        <label for="idFecha">Fecha:</label>
-        <input type="date" id="idFecha" />
+          <label for="idFecha">Fecha:</label>
+          <input type="date" id="idFecha" />
 
-        <label for="idCupo">Cupo:</label>
-        <input type="number" id="idCupo" value="30" min="1" max="1000" />
+          <label for="idCupo">Cupo:</label>
+          <input type="number" id="idCupo" value="30" min="1" max="1000" />
 
-        <button id="idBotonAddCarr">Agregar Carrera</button>
+          <button id="idBotonAddCarr">Agregar Carrera</button>
+        </form>
       </article>
 
       <article>
         <h3>Patrocinadores</h3>
-        <label for="idNombrePat">Nombre:</label>
-        <input type="text" id="idNombrePat" />
+        <form id="formPatrocinadores">
+          <label for="idNombrePat">Nombre:</label>
+          <input type="text" id="idNombrePat" />
 
-        <label for="idRubro">Rubro:</label>
-        <select id="idRubro">
-          <option value="Alimenticio">Alimenticio</option>
-          <option value="Banco">Banco</option>
-          <option value="Bebidas">Bebidas</option>
-          <option value="Farmacia">Farmacia</option>
-          <option value="Ropa deportiva">Ropa deportiva</option>
-          <option value="Estatal">Estatal</option>
-          <option value="General">General</option>
-        </select>
+          <label for="idRubro">Rubro:</label>
+          <select id="idRubro">
+            <option value="Alimenticio">Alimenticio</option>
+            <option value="Banco">Banco</option>
+            <option value="Bebidas">Bebidas</option>
+            <option value="Farmacia">Farmacia</option>
+            <option value="Ropa deportiva">Ropa deportiva</option>
+            <option value="Estatal">Estatal</option>
+            <option value="General">General</option>
+          </select>
 
-        <label for="idCarrerasPat">Carreras:</label>
-        <select id="idCarrerasPat" multiple></select>
+          <label for="idCarrerasPat">Carreras:</label>
+          <select id="idCarrerasPat" multiple></select>
 
-        <button id="idBotonAgregarActualizar">Agregar/Actualizar Patrocinador</button>
+          <button id="idBotonAgregarActualizar">Agregar/Actualizar Patrocinador</button>
+        </form>
       </article>
 
       <article>
         <h3>Corredores</h3>
-        <label for="idNombreCor">Nombre:</label>
-        <input type="text" id="idNombreCor" />
+        <form id="formCorredores">
+          <label for="idNombreCor">Nombre:</label>
+          <input type="text" id="idNombreCor" />
 
-        <label for="idEdad">Edad:</label>
-        <input type="number" id="idEdad" />
+          <label for="idEdad">Edad:</label>
+          <input type="number" id="idEdad" />
 
-        <label for="idCedula">Cédula:</label>
-        <input type="number" id="idCedula" />
+          <label for="idCedula">Cédula:</label>
+          <input type="number" id="idCedula" />
 
-        <label for="idFechaFicha">Fecha de vencimiento de ficha médica:</label>
-        <input type="date" id="idFechaFicha" />
+          <label for="idFechaFicha">Fecha de vencimiento de ficha médica:</label>
+          <input type="date" id="idFechaFicha" />
 
-        <label class="radio-label">Tipo de corredor:</label>
-        <input type="radio" name="TipoCorr" id="idElite" class="radio" /> Deportista de élite
-        <input type="radio" name="TipoCorr" id="idComun" class="radio" checked /> Deportista común
+          <label class="radio-label">Tipo de corredor:</label>
+          <input type="radio" name="TipoCorr" id="idElite" class="radio" /> Deportista de élite
+          <input type="radio" name="TipoCorr" id="idComun" class="radio" checked /> Deportista común
 
-        <button id="idBotonAgregarCorredor">Agregar Corredor</button>
+          <button id="idBotonAgregarCorredor">Agregar Corredor</button>
+        </form>
       </article>
 
       <article>
         <h3>Inscripciones</h3>
-        <label for="idCorredores">Corredores:</label>
-        <select id="idCorredores"></select>
+        <form id="formInscripciones">
+          <label for="idCorredores">Corredores:</label>
+          <select id="idCorredores"></select>
 
-        <label for="idCarreras">Carreras:</label>
-        <select id="idCarreras"></select>
+          <label for="idCarreras">Carreras:</label>
+          <select id="idCarreras"></select>
 
-        <button id="idBotonInscribir">Inscribir</button>
+          <button id="idBotonInscribir">Inscribir</button>
+        </form>
       </article>
     </section>
 

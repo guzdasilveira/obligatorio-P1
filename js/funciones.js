@@ -4,64 +4,94 @@ const sistema = new Sistema();
 
 // Botones
 window.addEventListener("load", () => {
+  opcionDatos();
   document.getElementById("idBotonDatos").addEventListener("click", opcionDatos);
   document.getElementById("idBotonEstad").addEventListener("click", opcionEstadisticas);
-  document.getElementById("idBotonAddCarr").addEventListener("click", agregarCarrera);
-  document
-    .getElementById("idBotonAgregarActualizar")
-    .addEventListener("click", agregarActualizarPatrocinador);
-  document.getElementById("idBotonAgregarCorredor").addEventListener("click", agregarCorredor);
-  document.getElementById("idBotonInscribir").addEventListener("click", inscribirCorredor);
   document.getElementById("idCarrera").addEventListener("change", mostrarInscriptos);
-  document
-    .getElementsByName("OrdenarNombreNumero")
-    .forEach((r) => r.addEventListener("change", mostrarInscriptos));
+  let radios = document.getElementsByName("OrdenarNombreNumero");
+  for (let i = 0; i < radios.length; i = i + 1) {
+    radios[i].addEventListener("change", mostrarInscriptos);
+  }
+
   document.getElementById("idPorCarreras").addEventListener("change", drawRegionsMap);
   document.getElementById("idPorInsc").addEventListener("change", drawRegionsMap);
+  document.getElementById("formCarreras").addEventListener("submit", agregarCarrera);
+  document.getElementById("formPatrocinadores").addEventListener("submit", agregarActualizarPatrocinador);
+  document.getElementById("formCorredores").addEventListener("submit", agregarCorredor);
+  document.getElementById("formInscripciones").addEventListener("submit", inscribirCorredor);
 });
 
 function opcionDatos() {
-  this.style.fontWeight = "bold";
-  this.style.border = "solid";
-  this.style.borderRadius = "5px";
-  this.style.backgroundColor = "#C2C2C2";
-  document.getElementById("idBotonEstad").style = "default";
+  const botonDatos = document.getElementById("idBotonDatos");
+  const botonEstad = document.getElementById("idBotonEstad");
+
+  botonDatos.style.fontWeight = "bold";
+  botonDatos.style.border = "solid";
+  botonDatos.style.borderRadius = "5px";
+  botonDatos.style.backgroundColor = "#C2C2C2";
+
+  botonEstad.removeAttribute("style");
+
   document.getElementById("sectionDatos").style.display = "block";
   document.getElementById("sectionEstadisticas").style.display = "none";
 }
 
 function opcionEstadisticas() {
-  this.style.fontWeight = "bold";
-  this.style.border = "solid";
-  this.style.borderRadius = "5px";
-  this.style.backgroundColor = "#C2C2C2";
-  document.getElementById("idBotonDatos").style = "defualt";
+  const botonEstad = document.getElementById("idBotonEstad");
+  const botonDatos = document.getElementById("idBotonDatos");
+
+  botonEstad.style.fontWeight = "bold";
+  botonEstad.style.border = "solid";
+  botonEstad.style.borderRadius = "5px";
+  botonEstad.style.backgroundColor = "#C2C2C2";
+
+  botonDatos.removeAttribute("style");
+
   document.getElementById("sectionDatos").style.display = "none";
   document.getElementById("sectionEstadisticas").style.display = "block";
   mostrarEstadisticas();
 }
 
-function agregarCarrera() {
+function agregarCarrera(event) {
+  event.preventDefault();
   const nombre = document.getElementById("idNombre").value;
   const depto = document.getElementById("idDepartamento").selectedOptions[0].text;
   const fecha = document.getElementById("idFecha").value;
   const cupo = parseInt(document.getElementById("idCupo").value);
+  const hoy = new Date();
+  const fechaCarrera = new Date(fecha);
+  hoy.setHours(0, 0, 0, 0);
+  fechaCarrera.setHours(0, 0, 0, 0);
+  console.log("fecha:", fecha);
+  if (fechaCarrera <= hoy) {
+    alert("La fecha de la carrera debe ser posterior a hoy");
+    return;
+  }
   if (nombre && fecha && cupo > 0) {
     const nuevaCarrera = new Carrera(nombre, depto, fecha, cupo);
     if (sistema.agregarCarrera(nuevaCarrera)) {
       actualizarSelectCarreras();
       alert("Carrera agregada con éxito");
       drawRegionsMap();
+      event.target.reset();
     }
   } else {
     alert("Complete todos los campos correctamente");
   }
 }
 
-function agregarActualizarPatrocinador() {
+function agregarActualizarPatrocinador(event) {
+  event.preventDefault();
   const nombre = document.getElementById("idNombrePat").value;
   const rubro = document.getElementById("idRubro").value;
-  const seleccionadas = Array.from(document.getElementById("idCarrerasPat").selectedOptions);
+  let lista = document.getElementById("idCarrerasPat");
+  let seleccionadas = [];
+  for (let i = 0; i < lista.options.length; i = i + 1) {
+    if (lista.options[i].selected) {
+      seleccionadas.push(lista.options[i]);
+    }
+  }
+
   const carreras = [];
   for (let i = 0; i < sistema.carreras.length; i++) {
     for (let j = 0; j < seleccionadas.length; j++) {
@@ -71,11 +101,18 @@ function agregarActualizarPatrocinador() {
     }
   }
   const p = new Patrocinador(nombre, rubro);
-  carreras.forEach((c) => p.agregarCarrera(c));
-  if (sistema.agregarPatrocinador(p)) alert("Patrocinador agregado/actualizado");
+  for (let i = 0; i < carreras.length; i = i + 1) {
+    p.agregarCarrera(carreras[i]);
+  }
+
+  if (sistema.agregarPatrocinador(p)) {
+    alert("Patrocinador agregado/actualizado");
+    event.target.reset();
+  }
 }
 
-function agregarCorredor() {
+function agregarCorredor(event) {
+  event.preventDefault();
   const nombre = document.getElementById("idNombreCor").value;
   const edad = parseInt(document.getElementById("idEdad").value);
   const cedula = document.getElementById("idCedula").value;
@@ -86,13 +123,15 @@ function agregarCorredor() {
     if (sistema.agregarCorredor(corredor)) {
       actualizarSelectCorredores();
       alert("Corredor agregado con éxito");
+      event.target.reset();
     }
   } else {
     alert("Complete todos los datos correctamente");
   }
 }
 
-function inscribirCorredor() {
+function inscribirCorredor(event) {
+  event.preventDefault();
   const nombreCor = document.getElementById("idCorredores").value;
   const nombreCar = document.getElementById("idCarreras").value;
   let corredor = null;
@@ -113,15 +152,19 @@ function inscribirCorredor() {
   if (!corredor || !carrera) {
     alert("Seleccione un corredor y una carrera");
   } else {
-
     const fechaCarrera = new Date(carrera.fecha);
     const fechaFicha = new Date(corredor.fechaFicha);
 
-    if (inscripcionPrevia(corredor, carrera) && validarVigencia(fechaFicha, fechaCarrera) && validarCupo(carrera.contadorPorCarrera, carrera.cupo)) {
+    if (
+      inscripcionPrevia(corredor, carrera) &&
+      validarVigencia(fechaFicha, fechaCarrera) &&
+      validarCupo(carrera.contadorPorCarrera, carrera.cupo)
+    ) {
       sistema.inscribirCorredor(corredor, carrera, carrera.contadorPorCarrera + 1);
       inscripcionExitosa(carrera.contadorPorCarrera, corredor, carrera);
       mostrarInscriptos();
       drawRegionsMap();
+      event.target.reset();
     }
   }
 }
@@ -164,25 +207,34 @@ function formatearFecha(fecha) {
 function inscripcionExitosa(numero, corredor, carrera) {
   let textoPatrocinadores = "";
   for (let i = 0; i < sistema.patrocinadores.length; i++) {
-  let carrerasPat = sistema.patrocinadores[i].carreras;
-  for (let j = 0; j < carrerasPat.length; j++) {
-    if (carrerasPat[j] === carrera) {
-      if (textoPatrocinadores.length === 0) {
-        textoPatrocinadores = sistema.patrocinadores[i].nombre + " (" + sistema.patrocinadores[i].rubro + ")";
-      } else {
-        textoPatrocinadores = textoPatrocinadores + " / " + sistema.patrocinadores[i].nombre + " (" + sistema.patrocinadores[i].rubro + ")";
+    let carrerasPat = sistema.patrocinadores[i].carreras;
+    for (let j = 0; j < carrerasPat.length; j++) {
+      if (carrerasPat[j] === carrera) {
+        if (textoPatrocinadores.length === 0) {
+          textoPatrocinadores =
+            sistema.patrocinadores[i].nombre + " (" + sistema.patrocinadores[i].rubro + ")";
+        } else {
+          textoPatrocinadores =
+            textoPatrocinadores +
+            " / " +
+            sistema.patrocinadores[i].nombre +
+            " (" +
+            sistema.patrocinadores[i].rubro +
+            ")";
+        }
       }
     }
   }
-}
   let mensaje = `¡Inscripción realizada con éxito!
   Número: ${numero}
   Nombre: ${corredor.nombre} ${corredor.edad} años, CI: ${corredor.cedula} Ficha Médica ${formatearFecha(
     corredor.fechaFicha
   )}
   ${corredor.tipoCorredor}
-  Carrera: ${carrera.nombre} en ${carrera.departamento} el ${formatearFecha(carrera.fecha)} Cupo: ${carrera.cupo}
-  ${textoPatrocinadores}`;  
+  Carrera: ${carrera.nombre} en ${carrera.departamento} el ${formatearFecha(carrera.fecha)} Cupo: ${
+    carrera.cupo
+  }
+  ${textoPatrocinadores}`;
   alert(mensaje);
   generarPDFInscripcion(mensaje, corredor, carrera, numero);
 }
@@ -193,21 +245,31 @@ function generarPDFInscripcion(mensaje, corredor, carrera, numero) {
   doc.setFontSize(12);
   doc.text(mensaje, 10, 20);
 
-  const nombreArchivo = `Inscripcion_${corredor.nombre.replaceAll(" ", "_")}_${carrera.nombre.replaceAll(" ", "_")}_${numero}.pdf`;
+  const nombreArchivo = `Inscripcion_${corredor.nombre.replaceAll(" ", "_")}_${carrera.nombre.replaceAll(
+    " ",
+    "_"
+  )}_${numero}.pdf`;
   doc.save(nombreArchivo);
 }
-
 
 function actualizarSelectCarreras() {
   const selects = ["idCarrerasPat", "idCarreras", "idCarrera"];
   for (let s = 0; s < selects.length; s++) {
     const select = document.getElementById(selects[s]);
     select.innerHTML = "";
-    const ordenadas = [...sistema.carreras].sort((a, b) => a.nombre.localeCompare(b.nombre));
-    for (let i = 0; i < ordenadas.length; i++) {
+    let copiaCarreras = sistema.carreras.slice();
+    copiaCarreras.sort(function (a, b) {
+      if (a.nombre > b.nombre) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+
+    for (let i = 0; i < copiaCarreras.length; i = i + 1) {
       const opt = document.createElement("option");
-      opt.value = ordenadas[i].nombre;
-      opt.textContent = ordenadas[i].nombre;
+      opt.value = copiaCarreras[i].nombre;
+      opt.textContent = copiaCarreras[i].nombre;
       select.appendChild(opt);
     }
   }
@@ -216,7 +278,15 @@ function actualizarSelectCarreras() {
 function actualizarSelectCorredores() {
   const select = document.getElementById("idCorredores");
   select.innerHTML = "";
-  const ordenados = [...sistema.corredores].sort((a, b) => a.nombre.localeCompare(b.nombre));
+  let ordenados = sistema.corredores.slice();
+  ordenados.sort(function (a, b) {
+    if (a.nombre > b.nombre) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+
   for (let i = 0; i < ordenados.length; i++) {
     const opt = document.createElement("option");
     opt.value = ordenados[i].nombre;
@@ -243,13 +313,21 @@ function mostrarInscriptos() {
       inscripciones.push(sistema.inscripciones[i]);
     }
   }
-  const ordenadas = inscripciones.sort((a, b) => {
-    if (ordenarPorNombre) {
-      return a.corredor.nombre.localeCompare(b.corredor.nombre);
-    } else {
+  let ordenadas = inscripciones.slice();
+  if (ordenarPorNombre) {
+    ordenadas.sort(function (a, b) {
+      if (a.corredor.nombre > b.corredor.nombre) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+  } else {
+    ordenadas.sort(function (a, b) {
       return a.numero - b.numero;
-    }
-  });
+    });
+  }
+
   for (let i = 0; i < ordenadas.length; i++) {
     const insc = ordenadas[i];
     const fila = document.createElement("tr");
@@ -270,52 +348,78 @@ function mostrarEstadisticas() {
   document.getElementById("lblPromedio").textContent =
     "Promedio de inscriptos por carrera: " + (promedio !== "Sin datos" ? promedio : "sin datos");
 
-  //sin inscriptos
-  const carrerasSinInscriptos = sistema.carreras.filter((c) => c.contadorPorCarrera === 0);
+  // sin inscriptos
+  let carrerasSinInscriptos = [];
+  for (let i = 0; i < sistema.carreras.length; i = i + 1) {
+    if (sistema.carreras[i].contadorPorCarrera === 0) {
+      carrerasSinInscriptos.push(sistema.carreras[i]);
+    }
+  }
   const ul = document.getElementById("ulSinInscriptos");
   ul.innerHTML = "";
+
   if (carrerasSinInscriptos.length === 0) {
     const li = document.createElement("li");
     li.textContent = "sin datos";
     ul.appendChild(li);
   } else {
-    carrerasSinInscriptos
-      .sort((a, b) => a.fecha - b.fecha)
-      .forEach((c) => {
-        const li = document.createElement("li");
-        li.textContent = `${c.nombre} (${c.fecha.toLocaleDateString()})`;
-        ul.appendChild(li);
-      });
+    let copia = carrerasSinInscriptos.slice();
+    copia.sort(function (a, b) {
+      return a.fecha - b.fecha;
+    });
+    for (let i = 0; i < copia.length; i = i + 1) {
+      let c = copia[i];
+      let li = document.createElement("li");
+      li.textContent =
+        c.nombre + " en " + c.departamento + " el " + c.fecha.toLocaleDateString() + " Cupo: " + c.cupo;
+      ul.appendChild(li);
+    }
   }
 
-  //mas inscriptos
+  // más inscriptos
   let max = 0;
-  let nombres = [];
+  let carrerasMax = [];
   for (let i = 0; i < sistema.carreras.length; i++) {
-    if (sistema.carreras[i].contadorPorCarrera > max) {
-      max = sistema.carreras[i].contadorPorCarrera;
-      nombres = [sistema.carreras[i].nombre];
-    } else if (sistema.carreras[i].contadorPorCarrera === max && max > 0) {
-      nombres.push(sistema.carreras[i].nombre);
+    const carrera = sistema.carreras[i];
+    if (carrera.contadorPorCarrera > max) {
+      max = carrera.contadorPorCarrera;
+      carrerasMax = [carrera];
+    } else if (carrera.contadorPorCarrera === max && max > 0) {
+      carrerasMax.push(carrera);
     }
   }
 
   const ulMas = document.getElementById("ulMasInscriptos");
   ulMas.innerHTML = "";
-  if (nombres.length === 0) {
+  if (carrerasMax.length === 0) {
     const li = document.createElement("li");
     li.textContent = "sin datos";
     ulMas.appendChild(li);
   } else {
-    nombres.forEach((nombre) => {
-      const li = document.createElement("li");
-      li.textContent = nombre;
+    for (let i = 0; i < carrerasMax.length; i = i + 1) {
+      let carrera = carrerasMax[i];
+      let li = document.createElement("li");
+      li.textContent =
+        carrera.nombre +
+        " en " +
+        carrera.departamento +
+        " el " +
+        carrera.fecha.toLocaleDateString() +
+        " Cupo: " +
+        carrera.cupo +
+        " inscriptos: " +
+        carrera.contadorPorCarrera;
       ulMas.appendChild(li);
-    });
+    }
   }
 
   //% Elite
-  const elite = sistema.corredores.filter((c) => c.tipoCorredor === "Deportista de Élite").length;
+  let elite = 0;
+  for (let i = 0; i < sistema.corredores.length; i = i + 1) {
+    if (sistema.corredores[i].tipoCorredor === "Deportista de Élite") {
+      elite = elite + 1;
+    }
+  }
   const total = sistema.corredores.length;
   let porcentaje;
   if (total === 0) {
@@ -337,15 +441,18 @@ function drawRegionsMap() {
   const contadorPorDepto = {};
   const porCarreras = document.getElementById("idPorCarreras").checked;
 
-  sistema.carreras.forEach((c) => {
-    const clave = `UY-${c.departamento.substring(0, 2).toUpperCase()}`;
-    if (!contadorPorDepto[clave]) contadorPorDepto[clave] = 0;
-    if (porCarreras) {
-      contadorPorDepto[clave]++;
-    } else {
-      contadorPorDepto[clave] += c.contadorPorCarrera;
+  for (let i = 0; i < sistema.carreras.length; i = i + 1) {
+    let c = sistema.carreras[i];
+    let clave = "UY-" + c.departamento.substring(0, 2).toUpperCase();
+    if (!contadorPorDepto[clave]) {
+      contadorPorDepto[clave] = 0;
     }
-  });
+    if (porCarreras) {
+      contadorPorDepto[clave] = contadorPorDepto[clave] + 1;
+    } else {
+      contadorPorDepto[clave] = contadorPorDepto[clave] + c.contadorPorCarrera;
+    }
+  }
 
   const data = google.visualization.arrayToDataTable([
     ["Region", porCarreras ? "Carreras" : "Inscriptos"],

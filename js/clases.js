@@ -93,7 +93,7 @@ class Sistema {
 
     let yaExiste = false;
     let i = 0;
-    while (i < this.patrocinadores.length && yaExiste == false) {
+    while (i < this.patrocinadores.length && !yaExiste) {
       if (this.patrocinadores[i].nombre === patrocinador.nombre) {
         this.patrocinadores[i].rubro = patrocinador.rubro;
         this.patrocinadores[i].carreras = patrocinador.carreras;
@@ -116,7 +116,7 @@ class Sistema {
 
   promedioInscriptos() {
     if (this.carreras.length === 0) return "sin datos";
-    else { 
+    else {
       let suma = 0;
       for (let i = 0; i < this.carreras.length; i++) {
         suma += this.carreras[i].contadorPorCarrera;
@@ -155,7 +155,9 @@ class Sistema {
     for (let i = 0; i < this.carreras.length; i++) {
       if (this.carreras[i].contadorPorCarrera === 0) vacias.push(this.carreras[i]);
     }
-    return vacias.sort((a, b) => a.fecha - b.fecha);
+    return vacias.sort(function (a, b) {
+      return a.fecha - b.fecha;
+    });
   }
 
   conteoPorDepartamento() {

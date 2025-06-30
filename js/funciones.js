@@ -62,7 +62,6 @@ function agregarCarrera(event) {
   const fechaCarrera = new Date(fecha);
   hoy.setHours(0, 0, 0, 0);
   fechaCarrera.setHours(0, 0, 0, 0);
-  console.log("fecha:", fecha);
   if (fechaCarrera <= hoy) {
     alert("La fecha de la carrera debe ser posterior a hoy");
     return;

@@ -196,6 +196,7 @@ function validarCupo(contador, cupo) {
     return true;
   }
 }
+
 function formatearFecha(fecha) {
   const d = new Date(fecha);
   const dia = d.getDate().toString().padStart(2, "0");
@@ -436,14 +437,36 @@ google.charts.load("current", {
 
 google.charts.setOnLoadCallback(drawRegionsMap);
 
+const codigos = {
+    "Artigas": "UY-AR",
+    "Canelones": "UY-CA",
+    "Cerro Largo": "UY-CL",
+    "Colonia": "UY-CO",
+    "Durazno": "UY-DU",
+    "Flores": "UY-FS",
+    "Florida": "UY-FD",
+    "Lavalleja": "UY-LA",
+    "Maldonado": "UY-MA",
+    "Montevideo": "UY-MO",
+    "Paysandú": "UY-PA",
+    "Río Negro": "UY-RN",
+    "Rivera": "UY-RV",
+    "Rocha": "UY-RO",
+    "Salto": "UY-SA",
+    "San José": "UY-SJ",
+    "Soriano": "UY-SO",
+    "Tacuarembó": "UY-TA",
+    "Treinta y Tres": "UY-TT",
+};
+
 // Mapa dinámico
 function drawRegionsMap() {
   const contadorPorDepto = {};
   const porCarreras = document.getElementById("idPorCarreras").checked;
 
   for (let i = 0; i < sistema.carreras.length; i = i + 1) {
-    let c = sistema.carreras[i];
-    let clave = "UY-" + c.departamento.substring(0, 2).toUpperCase();
+   let c = sistema.carreras[i];
+   let clave = codigos[c.departamento];
     if (!contadorPorDepto[clave]) {
       contadorPorDepto[clave] = 0;
     }

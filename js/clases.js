@@ -85,6 +85,17 @@ class Sistema {
     return true;
   }
 
+  actualizarPatrocinador(nombre, rubro) {
+    for (let i = 0; i < sistema.patrocinadores.length; i++) {
+      if (sistema.patrocinadores[i].nombre === nombre && sistema.patrocinadores[i].rubro !== rubro) {
+        sistema.patrocinadores[i].rubro = rubro;
+        alert("Patrocinador actualizado con éxito")
+        return false;
+      }
+    }
+    return true;
+  }
+
   agregarPatrocinador(patrocinador) {
     if (!patrocinador.carreras || patrocinador.carreras.length === 0) {
       alert("Debe seleccionar al menos una carrera.");

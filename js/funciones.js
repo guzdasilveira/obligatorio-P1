@@ -99,14 +99,18 @@ function agregarActualizarPatrocinador(event) {
       }
     }
   }
-  const p = new Patrocinador(nombre, rubro);
-  for (let i = 0; i < carreras.length; i = i + 1) {
-    p.agregarCarrera(carreras[i]);
-  }
 
-  if (sistema.agregarPatrocinador(p)) {
-    alert("Patrocinador agregado/actualizado");
-    event.target.reset();
+  if (sistema.actualizarPatrocinador(nombre, rubro)) {
+
+    const p = new Patrocinador(nombre, rubro);
+    for (let i = 0; i < carreras.length; i = i + 1) {
+      p.agregarCarrera(carreras[i]);
+    }
+
+    if (sistema.agregarPatrocinador(p)) {
+      alert("Patrocinador agregado con éxito");
+      event.target.reset();   
+    }
   }
 }
 
@@ -316,7 +320,7 @@ function mostrarInscriptos() {
   let ordenadas = inscripciones.slice();
   if (ordenarPorNombre) {
     ordenadas.sort(function (a, b) {
-      if (a.corredor.nombre > b.corredor.nombre) {
+      if (a.corredor.nombre.toUpperCase() > b.corredor.nombre.toUpperCase()) {
         return 1;
       } else {
         return -1;
